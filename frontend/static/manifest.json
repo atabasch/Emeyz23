@@ -1,0 +1,49 @@
+{
+  "short_name": "#Emeyz",
+  "name": "Emeyz Hayat Rehberi. Ne, nedir, nasıl yapılır?",
+  "icons": [
+    {
+      "src": "/images/app-icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/images/app-icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/images/app-icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    },
+    {
+      "src": "/images/app-icon.png",
+      "type": "image/png",
+      "sizes": "800x800"
+    }
+  ],
+  "id": "/?source=pwa",
+  "start_url": "/",
+  "background_color": "#1786C8",
+  "display": "fullscreen", //standalone
+  "scope": "/",
+  "theme_color": "#1786C8",
+  "shortcuts": [
+    {
+      "name": "Anasayfa",
+      "short_name": "Anasayfa",
+      "description": "Son eklenen makaleler",
+      "url": "/?source=pwa",
+      "icons": [{ "src": "/images/app-icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Kategoriler",
+      "short_name": "Kategoriler",
+      "description": "İçerik kategorileri",
+      "url": "/?source=pwa",
+      "icons": [{ "src": "/images/app-icon-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "description": "Emeyz Hayat Rehberi. Ne, nedir, nasıl yapılır?"
+}
