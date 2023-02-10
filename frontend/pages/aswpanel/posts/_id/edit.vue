@@ -26,12 +26,8 @@ export default {
       await this.$router.replace(this.$const.url.panel+'posts')
     }else{
       let {data, status} = await this.$axios.get('/admin/post/'+id);
-      if(status===200){
-        if(!data.status){
-          await this.$router.replace(this.$const.url.panel+'posts')
-        }else{
-          this.post = data.data
-        }
+      if(status===200 && data.success){
+        this.post = data.post
       }else{
         await this.$router.replace(this.$const.url.panel+'posts')
       }

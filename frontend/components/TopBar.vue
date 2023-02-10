@@ -1,17 +1,20 @@
 <template>
 <div>
-  <v-app-bar app color="primary" dark class="mx-auto" :clipped-right="true">
+  <v-app-bar app light flat class="mx-auto white" height="76" :clipped-right="true">
     <v-container class="pa-0 px-3 fill-height em-container">
       <v-app-bar-nav-icon v-if="false" />
-      <v-toolbar-title><router-link to="/" class="white--text text-decoration-none">Emeyz</router-link></v-toolbar-title>
+      <v-toolbar-title>
+        <router-link to="/"  class="black--text text-decoration-none font-weight-bold"><v-icon color="black" light>mdi-compass-rose</v-icon> Emeyz</router-link>
+      </v-toolbar-title>
       <v-spacer />
 
-      <v-btn-toggle class="d-none d-md-flex" dark group>
-        <v-btn link :to="getToFromUrl(item.url)" class="text-capitalize body-2 px-2 white--text "   :key="item.id" v-for="item in getItems"><v-icon>{{item.icon}}</v-icon> {{item.title}}</v-btn>
-        <v-btn link  @click="logonDialogStatus = true" class="text-capitalize body-2 px-2 white--text" v-if="!$auth.user" ><v-icon>mdi-login-variant</v-icon> Giriş | Kayıt</v-btn>
+      <v-btn-toggle class="d-none d-md-flex" light group>
+        <v-btn link :to="getToFromUrl(item.url)" class="topNavItem" :key="item.id" v-for="item in getItems"><v-icon>{{item.icon}}</v-icon> {{item.title}}</v-btn>
+        <v-btn link @click="logonDialogStatus = true" class="topNavItem" v-if="!$auth.user" ><v-icon>mdi-login-variant</v-icon> Giriş | Kayıt</v-btn>
+
         <v-menu offset-y v-if="$auth.user">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn link v-bind="attrs" v-on="on" class="text-capitalize body-2 px-2 white--text"><v-icon>mdi-dots-vertical</v-icon> Hesap</v-btn>
+            <v-btn link v-bind="attrs" v-on="on" class="text-capitalize body-2 px-2"><v-icon>mdi-dots-vertical</v-icon> Hesap</v-btn>
           </template>
           <v-list nav dense >
             <v-subheader class="text-capitalize subtitle-2 px-2">İçerikler</v-subheader>
@@ -57,7 +60,7 @@
     <v-divider></v-divider>
 
     <v-list dense nav>
-      <v-list-item v-for="(item, index) in $store.getters['navigation/getItems']['mobile-menu']" :key="index" link>
+      <v-list-item v-for="(item, index) in $store.getters['navigation/getItems']['mobile-menu']" :key="index" link :to="item.url">
         <v-list-item-icon><v-icon>{{ item.icon || 'mdi-chevron-right' }}</v-icon></v-list-item-icon>
         <v-list-item-content><v-list-item-title>{{ item.title }}</v-list-item-title></v-list-item-content>
       </v-list-item>
@@ -97,4 +100,15 @@ export default {
 </script>
 
 <style scoped>
+.topNavItem{
+  text-transform: capitalize;
+  color: black;
+  font-weight: bold;
+  letter-spacing: 0.2px;
+  font-size: 1rem;
+}
+.topNavItem:hover{
+  color: #03a9f4;
+  background-color: transparent;
+}
 </style>

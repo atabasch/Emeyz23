@@ -6,6 +6,7 @@ use Atabasch\Helpers\Validator;
 use Atabasch\Models\User;
 use Atabasch\Config;
 use Atabasch\Mailer;
+use Atabasch\Uploader;
 
 use \Firebase\JWT\JWT;
 use \Firebase\JWT\ExpiredException;
@@ -22,6 +23,7 @@ class AccountController extends \Atabasch\BaseController{
 
 
     public function index(){
+        
         return $this->response([]);
     }
 
@@ -316,7 +318,9 @@ class AccountController extends \Atabasch\BaseController{
 
             if($this->user->updateCover($uid, ($filename ?? null) )){
                 if($oldfilename && $oldfilename != $filename){
-                     unlink(__DIR__.'/../user/'.$oldfilename);
+                     if(file_exists(PATH_MEDIA_USER.'/'.$oldfilename)){
+                        unlink(PATH_MEDIA_USER.'/'.$oldfilename);
+                     }
                 }
                 $url =  Config::get('url_media', '') . '/' . Config::get('path_media_user', 'upload') . '/' . $filename ?? '';
                 return $this->response(['url' => $url], true, (!$filename? "Profil fotoğrafı kaldırıldı." : "Profil fotoğrafı güncellendi."));

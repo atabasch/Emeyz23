@@ -1,10 +1,11 @@
 <template>
-  <div class="pa-2 grey lighten-5" v-if="items">
+  <div v-if="items">
       <v-btn link
-             x-small
+             small
              elevation="0"
-             color="grey lighten-2"
-             class="subtitle-2 text-capitalize ma-1 rounded-0"
+             dark
+             :color="category.color"
+             class="item text-capitalize"
              :to="'/kategori/'+category.slug"
              :key="category.id"
              v-for="category in items ">{{ category.title }}</v-btn>
@@ -24,5 +25,8 @@ export default {
 </script>
 
 <style scoped>
-
+.item{
+  font-weight: 300;
+  margin:0px 5px 3px 0px;
+}
 </style>

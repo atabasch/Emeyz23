@@ -17,20 +17,9 @@ class BaseController extends \Atabasch\Main{
     public function __construct(){
         parent::__construct();
         $this->db  = new Database();
-        $this->loadConfigs();
         $this->postDatas = count($_POST) > 0? $_POST : json_decode(file_get_contents('php://input'), true) ;
     }
 
-    private function loadConfigs(){
-        $configs = [];
-        $config_items = $this->db->queryAll("SELECT * FROM config");
-        if($config_items){
-            foreach($config_items as $config){
-                $configs[$config->key] = $config->val;
-            }
-        }
-        $GLOBALS["CONFIG"] = $configs;
-    }
 
     protected function json($data = []){
         header('Content-Type: application/json; charset=utf-8');

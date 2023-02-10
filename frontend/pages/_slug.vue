@@ -8,9 +8,10 @@
 
   <v-col v-else cols="12" md="8">
   <v-card color="white" class="pa-4 mb-6">
-    <v-alert class="pa-0 pb-4 pr-4" border="bottom"><h1 class="text-h4 font-weight-bold">{{ getPost.title }}</h1></v-alert>
-    <div class="grey--text">
-      <v-icon size="22">mdi-calendar-edit</v-icon> <strong>{{ getDate }}</strong> tarihinde yazıldı <v-icon size="22">mdi-eye</v-icon> <strong>{{ getPost.views }}</strong> kez okundu.
+    <BoxTitle :title="getPost.title" tag="h1" single></BoxTitle>
+    <div class="post-info">
+      <v-icon size="22">mdi-calendar-edit</v-icon> <strong>{{ getDate }}</strong> tarihinde yazıldı
+      <v-icon size="22">mdi-eye</v-icon> <strong>{{ getPost.views }}</strong> kez okundu.
     </div>
 
     <v-img :src="$store.state.global.img.lg+getPost.cover" class="my-3" />
@@ -18,13 +19,12 @@
     <v-divider />
     <v-card-text v-html="getPost.content" class="text-body-1 text-md-h6 font-weight-regular black--text darken-1"></v-card-text>
 
-    <v-divider  v-if="getPost.categories"/>
     <PostItemCategories v-if="getPost.categories"  :items="getPost.categories || null" />
   </v-card>
 
     <template v-if="getPost.contentItems">
       <v-card color="white" class="pa-4 mb-6" v-for="(item, index) in getPost.contentItems" :key="item.id">
-        <v-alert class="py-2 px-4" border="left"><h2 class="text-h5 font-weight-bold">{{ item.title }}</h2></v-alert>
+        <BoxTitle :title="item.title" tag="h2" single></BoxTitle>
         <v-img :src="$store.state.global.img.lg+item.cover" v-if="item.cover" aspect-ratio="16/9" class="my-3" />
         <v-divider />
         <v-card-text v-html="item.content" class="text-h6 font-weight-regular black--text darken-1"></v-card-text>
@@ -34,10 +34,6 @@
 
 
   <v-col cols="4" class="hidden-sm-and-down">
-    <v-alert border="left" icon="mdi-folder-multiple" elevation="1">
-      <strong>Kategoriler</strong>
-    </v-alert>
-
     <MainSidebar />
   </v-col>
 
@@ -101,5 +97,8 @@ export default {
 </script>
 
 <style scoped>
-
+.post-info{
+  font-size: 1rem;
+  font-weight: 300;
+}
 </style>

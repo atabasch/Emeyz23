@@ -210,8 +210,8 @@ export default {
 
     fetchCategories(){
       this.$axios.get('/admin/category').then(({data, status}) => {
-        if(status===200){
-          this.categories = data.data;
+        if(status===200 && data.success){
+          this.categories = data.categories;
           this.loadingCategories = false;
         }
       }).catch(err => {})
@@ -239,13 +239,11 @@ export default {
       this.post.category_ids = Object.values(this.post.categories).map(i => i.id);
 
       this.$axios.post(this.getApiUri, {post: this.post}).then(({status, data}) => {
-        if(status===200){
-          if(data.status){
+        if(status===200 && data.success){
             if(!this.update){
-              this.$router.replace(this.$store.state.global.url.panel+'posts/'+data.data.id+'/edit');
+              this.$router.replace(this.$store.state.global.url.panel+'posts/'+data.id+'/edit');
             }
             this.saveLoading    = false;
-          }
         }
       }).catch(err => {
         this.saveLoading    = false;

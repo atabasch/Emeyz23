@@ -6,7 +6,14 @@ export default ({env}, inject) => {
       api: {
         base :'',
         media: {
-          category: 'https://media.emeyz.com/category/'
+          category: 'https://media.emeyz.com/category/',
+          user:     'https://media.emeyz.com/user/',
+          upload: {
+            sm: 'https://media.emeyz.com/upload/sm_',
+            md: 'https://media.emeyz.com/upload/md_',
+            lg: 'https://media.emeyz.com/upload/lg_',
+            base: 'https://media.emeyz.com/upload/',
+          }
         }
       }
     },

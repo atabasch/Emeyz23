@@ -9,7 +9,7 @@ class MainController extends \Atabasch\Controllers\AdminController
     public function index(){
         
 
-        $this->json([]);
+        $this->response([]);
     }
 
 

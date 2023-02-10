@@ -19,11 +19,11 @@ class CategoryController extends \Atabasch\Controllers\AdminController{
     }
 
     private function getAll(){
-        $this->json($this->category->all());
+        $this->response(['categories' => $this->category->all()]);
     }
 
     private function getOne($id){
-        $this->json($this->category->one($id));
+        $this->response(['category' => $this->category->one($id)]);
     }
 
     public function create(){
@@ -33,10 +33,10 @@ class CategoryController extends \Atabasch\Controllers\AdminController{
             $errors     = $validator->getResult();
             if(!$errors){
                 $id = $this->category->create($postDatas);
-                return $this->json($this->category->one($id));
+                return $this->response(['category' => $this->category->one($id)]);
             }
         }
-        return $this->renderError(['errors' => $post['errors'] ?? null]);
+        return $this->response(['errors' => $post['errors'] ?? null], false);
     }
 
     public function update($id=null){
@@ -47,11 +47,11 @@ class CategoryController extends \Atabasch\Controllers\AdminController{
             if(!$errors){
                 $updated = $this->category->update($postDatas, $id);
                 if($updated){
-                    return $this->json($this->category->one($id));
+                    return $this->response(['category' => $this->category->one($id)]);
                 }
             }
         }
-        return $this->renderError(['errors' => $errors ?? null]);
+        return $this->response(['errors' => $errors ?? null], false);
     }
 
     public function status($id){
@@ -60,18 +60,18 @@ class CategoryController extends \Atabasch\Controllers\AdminController{
             if($status){
                 $updated = $this->category->update(['status'=>$status], $id);
                 if($updated){
-                    return $this->json($this->category->one($id));
+                    return $this->response(['category' => $this->category->one($id)]);
                 }
             }
         }
-        return $this->renderError(['errors' => $post['errors'] ?? null]);
+        return $this->response(['errors' => $post['errors'] ?? null], false);
     }
 
     public function delete($id=null){
         if($this->hasRequestMethod('POST') && $id){
-            return $this->json($this->category->delete($id));
+            return $this->response([]);
         }
-        return $this->renderError(['errors' => $post['errors'] ?? null]);
+        return $this->response(['errors' => $post['errors'] ?? null], false);
     }
 
 

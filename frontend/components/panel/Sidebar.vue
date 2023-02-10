@@ -2,15 +2,15 @@
   <v-navigation-drawer color="primary" dark value="true" :mini-variant="miniVariant" fixed app :expand-on-hover="miniVariant">
 
 
-    <v-list shaped>
+    <v-list shaped  dense>
 
 
       <template v-for="(group, gIndex) in items">
 
         <v-subheader>{{ group.title }}</v-subheader>
-        <v-divider class="mx-4"></v-divider>
+        <v-divider class="mx-4" ></v-divider>
         <v-list-item-group>
-          <v-list-item v-for="(item, index) in group.items" :key="index" :to="item.to" router exact>
+          <v-list-item v-for="(item, index) in group.items" :key="index" :to="$const.url.panel+item.to" router exact ripple>
             <v-list-item-action>
               <v-icon>{{ item.icon }}</v-icon>
             </v-list-item-action>
@@ -22,6 +22,15 @@
         </v-list-item-group>
 
       </template>
+
+
+      <v-divider class="mx-4" ></v-divider>
+      <v-list-item-group>
+        <v-list-item  to="/" router exact ripple>
+          <v-list-item-action><v-icon>mdi-web</v-icon></v-list-item-action>
+          <v-list-item-content><v-list-item-title>Emeyz'e Dön</v-list-item-title></v-list-item-content>
+        </v-list-item>
+      </v-list-item-group>
 
 
     </v-list>
@@ -47,49 +56,47 @@ export default {
         {
           title: 'Başlangıç',
           items:  [
-            { title: 'Genel Bakış', icon: 'mdi-view-dashboard', to: '/aswpanel' }
+            { title: 'Genel Bakış', icon: 'mdi-view-dashboard', to: '' }
           ]
         },
 
         {
           title:  'Yazılar',
           items:  [
-            { title: 'Tüm Yazılar', icon: 'mdi-text', to: '/aswpanel/posts' },
-            { title: 'Yazı Ekle', icon: 'mdi-pencil-plus', to: '/aswpanel/posts/create' },
-            { title: 'Kategoriler', icon: 'mdi-file-tree', to: '/aswpanel/posts/categories' }
+            { title: 'Tüm Yazılar', icon: 'mdi-text', to: 'posts' },
+            { title: 'Yazı Ekle', icon: 'mdi-pencil-plus', to: 'posts/create' },
+            { title: 'Kategoriler', icon: 'mdi-file-tree', to: 'posts/categories' }
           ]
         },
 
         {
           title:  'Anketler',
           items:  [
-            { title: 'Anket Listesi', icon: 'mdi-poll', to: '/aswpanel/surveys' },
-            { title: 'Yeni Anket', icon: 'mdi-plus', to: '/aswpanel/surveys/create' },
-          ]
-        },
-
-        {
-          title:  'Kullanıcılar',
-          items:  [
-            { title: 'Hesap Listesi', icon: 'mdi-account-multiple', to: '/aswpanel/accounts' },
-            { title: 'Kullanıcı Oluştur', icon: 'mdi-account-plus', to: '/aswpanel/accounts/create' },
+            { title: 'Anket Listesi', icon: 'mdi-poll', to: 'surveys' },
+            { title: 'Yeni Anket', icon: 'mdi-plus', to: 'surveys/create' },
           ]
         },
 
         {
           title:  'Diğer',
           items:  [
-            { title: 'Medya Dosyaları', icon: 'mdi-folder-multiple', to: '/aswpanel/media' },
-            { title: 'Sayfalar', icon: 'mdi-file', to: '/aswpanel/pages' },
-            { title: 'Navigasyon', icon: 'mdi-link-variant', to: '/aswpanel/navigations' },
+            { title: 'Medya Dosyaları', icon: 'mdi-folder-multiple', to: 'media' },
+            { title: 'Sayfalar', icon: 'mdi-file', to: 'pages' },
+            { title: 'Hesap Listesi', icon: 'mdi-account-multiple', to: 'accounts' },
+            { title: 'Navigasyon', icon: 'mdi-link-variant', to: 'navigations' },
           ]
         },
+
         {
-          title:  '',
+          title:  'Ayarlar',
           items:  [
-            { title: "Emeyz'e Git", icon: 'mdi-web', to: '/' },
+            { title: 'Genel', icon: 'mdi-cogs', to: 'settings/general' },
+            { title: 'E-Posta', icon: 'mdi-email-edit', to: 'settings/email' },
+            { title: 'Medya', icon: 'mdi-image-multiple', to: 'settings/media' },
           ]
-        }
+        },
+
+
 
       ]
     }

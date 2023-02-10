@@ -1,5 +1,6 @@
 <template>
 <div>
+  <BoxTitle title="Çok Okunanlar" />
   <TrendItem :key="post.id" :post="post" :index="index" v-for="(post, index) in getTrends" />
 </div>
 </template>

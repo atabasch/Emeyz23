@@ -1,29 +1,24 @@
 <template>
-  <v-card class="pa-3 mb-7 elevation-1 rounded-0">
-    <v-skeleton-loader v-if="!post"
-      v-bind="{ class:'mb-5' }"
-      type="image, article, divider, table-row"
-    ></v-skeleton-loader>
-
-    <div v-else>
-      <router-link :to="'/'+post.slug">
-        <v-img :src="$store.state.global.img.md+post.cover" alt="post.title">
-
-        </v-img>
-      </router-link>
-
-      <v-hover v-slot="{hover}">
-        <h1 class="text-h4 my-2" :title="post.title">
-          <router-link class="text-decoration-none  font-weight-medium black-anim-text"
-                       :to="'/'+post.slug">{{ post.title }}</router-link>
-        </h1>
-      </v-hover>
-
-      <p class="body-2 grey--text text--darken-2">{{ post.summary || post.description }}</p>
-      <v-divider v-if="post.categories" />
-      <PostItemCategories v-if="post.categories" :items="getCategories || null" />
+  <div class="d-flex flex-column ih-box mb-5 align-stretch">
+    <div class="ih-thumb d-flex">
+      <v-img :src="$store.state.global.img.lg+post.cover" :aspect-ratio="16/9" :alt="post.title"/>
     </div>
-  </v-card>
+    <div class="ih-body py-4 px-2">
+
+      <div class="ih-info d-flex">
+        <span class="ih-date mr-2"><v-icon size="20" color="red">mdi-calendar-outline</v-icon> <time v-html="$helper.getDateFormat(post.p_time, 'dateLong')"></time></span>
+        <span class="ih-author mr-2"><v-icon size="20" color="red">mdi-account-outline</v-icon> <data :value="post.user_fullname">{{ post.user_fullname }}</data></span>
+      </div>
+      <v-divider class="my-2"/>
+      <h2 class="ih-title text-h4 font-weight-bold"><router-link :to="'/'+post.slug" class=" black-anim-text">{{ post.title }}</router-link></h2>
+      <p class="ih-summary">{{ post.summary || post.description }}</p>
+
+      <div class="align-self-end d-flex">
+        <PostItemCategories v-if="post.categories"  :items="getCategories || null" />
+      </div>
+
+    </div>
+  </div>
 </template>
 
 <script>
@@ -44,5 +39,42 @@ export default {
 </script>
 
 <style scoped>
+.ih-box{
+  background-color: white;
+  border: 1px solid #F5F5F5;
+}
+.ih-box:hover .ih-thumb img{
+  transform: scale(1.2);
+}
+.ih-thumb{
+  flex: none;
+  position: relative;
+  overflow: hidden;
+  height: auto;
+  border-radius: 5px;
+}
+.ih-thumb img{
+  transition-duration: 500ms;
+  transform: scale(1);
+  max-width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+.ih-info{
+  color: rgb(115, 115, 115);
+
+}
+.ih-info > *{
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.3px;
+}
+.ih-summary{
+  margin-top: 8px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
 
 </style>

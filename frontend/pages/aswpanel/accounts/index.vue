@@ -1,7 +1,7 @@
 <template>
 <v-sheet>
 
-  <ContentHead title="Kullanıcın Hesapları"
+  <AdminContentHead title="Kullanıcın Hesapları"
                description="Emeyz Kullanıcı ve Aboneleri."
                :button="{ text:'Yeni Hesap Oluştur', icon:'mdi-user-plus', to:$store.state.global.url.panel+'accounts/create'  }" />
 

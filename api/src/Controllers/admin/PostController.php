@@ -23,20 +23,20 @@ class PostController extends \Atabasch\Controllers\AdminController{
             'posts' => $posts,
             'total' => $this->db()->getTotalOfTable('articles')
         ];
-        $this->json($data);
+        $this->response($data);
     }
 
     private function getOne($id){
         $sql = $this->getSql('WHERE p.id=?', true);
         $post = $this->db()->queryOne($sql, [$id]);
         if(!$post){
-            return $this->json(['notfound'=>true]);
+            return $this->response(['notfound'=>true]);
         }
         $items = $this->db()->queryAll('SELECT * FROM lists WHERE parent=? ORDER BY `order` ASC', [$post->id]);
         $categories = $this->db()->queryAll('SELECT c.id, c.title, c.slug FROM blog_categories AS c INNER JOIN conn_art_cat con ON con.blog_category_id=c.id WHERE con.article_id=?', [$post->id]);
         $post->items = $items ?? [];
         $post->categories = $categories ?? [];
-        $this->json($post);
+        $this->response(['post' => $post]);
     }
 
     private function getSql($more=null, $single=false){
@@ -74,23 +74,23 @@ class PostController extends \Atabasch\Controllers\AdminController{
             $postModel = new Post();
             $post = $postModel->create($postDatas);
             if($post['status']){
-                return $this->json(['id' => $post['id']]);
+                return $this->response(['id' => $post['id']]);
             }
         }
-        return $this->renderError(['errors' => $post['errors'] ?? null]);
+        return $this->response(['errors' => $post['errors'] ?? null], false);
     }
 
     //MAKALE GÜNCELLE
     public function update($id=null){
         if(!$this->hasRequestMethod('POST') || !$id){
-            return $this->renderError();
+            return $this->response([], false);
         }
 
         $postDatas = $this->post("post");
         $postDatas['author'] = $_SESSION['account']->id ?? 1;
         $postModel = new Post();
         $update = $postModel->update($postDatas, $id);
-        $this->json($update);
+        $this->response(['post' => $update]);
     }
 
     //MAKELEYİ SİL
@@ -99,10 +99,10 @@ class PostController extends \Atabasch\Controllers\AdminController{
             $postModel = new Post();
             $delete = $postModel->delete($id);
             if($delete){
-                return $this->json($delete);
+                return $this->response(['affectedRow' => $delete]);
             }
         }
-        return $this->renderError();
+        return $this->response([], false);
     }
 
     //MAKALE YAYIMLAMA DURUMUNU DEĞİŞTİR
@@ -115,13 +115,13 @@ class PostController extends \Atabasch\Controllers\AdminController{
                 $postModel = new Post();
                 $update = $postModel->updateStatus($status, $id);
                 if($update){
-                    return $this->json(['status' => $status]);
+                    return $this->response(['status' => $status]);
                 }
 
             }
 
         }
-        return $this->renderError();
+        return $this->response([], false);
     } // status
 
 

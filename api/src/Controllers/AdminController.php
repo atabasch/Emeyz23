@@ -32,15 +32,6 @@ class AdminController extends \Atabasch\BaseController{
     }
 
 
-
-    public function json($data = [], $status=true){
-        $data = [
-            'status' => $status,
-            'data' => $data
-        ];
-        return parent::json($data);
-    }
-
     protected function renderError(){
         return $this->json([
             'message' => 'Hatalı İstek'

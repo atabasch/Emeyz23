@@ -5,21 +5,18 @@
       <PostItemHorizontal v-else :key="post.id" :post="post"  />
     </template>
 
-    <v-btn
-      v-if="!$store.getters['post/getLoadMoreEnd'] && getPosts.length > 9"
-      block
-      color="primary"
-      outlined
-      plain
-      text
-      class="text-capitalize"
-      @click.stop="$store.dispatch('post/loadPosts', {loadMore: true})">Daha fazla içerik getir</v-btn>
+    <div class="d-flex flex-row get-more">
+      <div class="line flex-grow-1"></div>
+        <button v-if="!$store.getters['post/getLoadMoreEnd'] && getPosts.length > 9"
+          @click.stop="$store.dispatch('post/loadPosts', {loadMore: true})">Daha fazla içerik getir</button>
+      <div class="line  flex-grow-1"></div>
+      </div>
 
   </div>
 </template>
 
 <script>
-import PostItem from "@/components/child/PostItem";
+import PostItem from "@/components/child/PostImageItem";
 import PostItemHorizontal from "@/components/child/PostItemHorizontal";
 export default {
   name: "PostList",
@@ -37,4 +34,29 @@ export default {
 
 <style scoped>
 
+.get-more .line{position: relative}
+.get-more .line::before{
+  content: "";
+  display: block;
+  height: 1px;
+  width: 100%;
+  background-color: #E0E0E0;
+  position: absolute;
+  top:50%;
+  margin-top: -1px;
+}
+.get-more button{
+  border: 1px solid #E0E0E0;
+  font-size: 18px;
+  line-height: 40px;
+  height: 40px;
+  font-weight: 400;
+  font-style: italic;
+  padding: 0px 25px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 1);
+}
+.get-more button:hover{
+  background-color: rgba(225, 225, 225, 1);
+}
 </style>

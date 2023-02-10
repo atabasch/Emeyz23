@@ -13,6 +13,9 @@ require_once(__DIR__.'/vendor/autoload.php');
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 
+\Atabasch\Init::run();
+
+
 $urls = [
     $_SERVER['REQUEST_SCHEME'] . '://' .'emeyz.com',
     $_SERVER['REQUEST_SCHEME'] . '://' .'emeyz.asw',
@@ -51,6 +54,7 @@ $methodName     = !$pathParts[1]? 'index' : $pathParts[1];
 
 array_shift($pathParts);
 array_shift($pathParts);
+
 
 $controller = new $controllerName;
 if(method_exists($controller, $methodName)){

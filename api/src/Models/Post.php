@@ -69,7 +69,7 @@ class Post extends \Atabasch\Model {
 
         $postItems = $this->queryAll("SELECT * FROM lists WHERE status='published' AND parent=? ORDER BY `order`", [$post->id]);
 
-        $categoriesSql = "SELECT cat.id,cat.title,cat.slug FROM blog_categories as cat
+        $categoriesSql = "SELECT cat.id,cat.title,cat.slug,cat.color FROM blog_categories as cat
                           INNER JOIN conn_art_cat as conn
                           ON conn.blog_category_id=cat.id 
                           WHERE conn.article_id=?";

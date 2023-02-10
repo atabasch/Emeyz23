@@ -49,14 +49,12 @@ export default {
         let data = new FormData();
         data.append('file', event.target.files[0]);
         this.$axios.post('/admin/media/upload', data, { headers: { 'Content-Type': 'multipart/form-data' } }).then(({data, status}) => {
-          if(status===200){
-            if(data.status){
-              this.$emit('onUploaded',data.data.file);
-              this.loading = false;
-            }else{
-              this.selectedFile = false;
-              this.loading = false;
-            }
+          if(status===200 && data.success){
+            this.$emit('onUploaded',data.file);
+            this.loading = false;
+          }else{
+            this.selectedFile = false;
+            this.loading = false;
           }
         }).catch(err => {  });
 

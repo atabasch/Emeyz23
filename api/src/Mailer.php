@@ -43,6 +43,11 @@ class Mailer{
         $this->mail->Password   = $this->password;
         $this->mail->SMTPSecure = $this->encrypt;
         $this->mail->Port       = $this->port;
+        
+        if(Config::get('mail_reply', false)){
+            $this->mail->addReplyTo(Config::get('mail_reply'), Config::get('mail_sender_name', '')); 
+        }
+
         $this->mail->setLanguage('tr');
         $this->from(Config::get('mail_sender'), Config::get('mail_sender_name', ''));
     }

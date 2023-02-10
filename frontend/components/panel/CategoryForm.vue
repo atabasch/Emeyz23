@@ -89,7 +89,7 @@ export default {
       this.loadingCategories=true;
       this.$axios.get('/admin/category').then(({status, data})=>{
         if(status===200){
-          this.categories = data.data
+          this.categories = data.categories
         }
         this.loadingCategories=false;
       }).catch(err => {
@@ -117,11 +117,9 @@ export default {
         parent: this.category.parent.id
       };
       this.$axios.post('/admin/category/create', datas).then(({status, data})=>{
-        if(status===200){
-          if(data.status){
-            this.$emit('created', data.data);
+        if(status===200 && data.success){
+            this.$emit('created', data.category);
             this.clearForm();
-          }
         }
       }).catch(err => { console.log(err) })
     },
@@ -133,10 +131,8 @@ export default {
         parent: this.category.parent.id
       };
       this.$axios.post('/admin/category/update/'+this.category.id, datas).then(({status, data})=>{
-        if(status===200){
-          if(data.status){
-            this.$emit('updated', {index:this.category.index, ...data.data});
-          }
+        if(status===200 && data.success){
+            this.$emit('updated', {index:this.category.index, ...data.category});
         }
       }).catch(err => { console.log(err) })
     },

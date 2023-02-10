@@ -1,32 +1,48 @@
 <template>
-<div style="height: auto">
-  <v-row v-if="getHeadline.length > 5">
-    <v-col cols="4" class="hidden-sm-and-down">
-      <HeadlineItem :item="getHeadline[0]"/>
-    </v-col>
+  <Flicking :options="carouselOptions" :plugins="plugins">
 
-    <v-col cols="4" class="hidden-sm-and-down px-0">
-      <HeadlineItem style="height: 170px" :item="getHeadline[1]"/>
-      <HeadlineItem style="height: 170px; margin-top: 10px" :item="getHeadline[2]"/>
-    </v-col>
+    <v-img :key="index" v-for="(post, index) in getHeadline"
+           :src="$const.url.api.media.upload.lg+post.cover"
+           :aspect-ratio="1/1"
+           class="pa-0 mr-1 col-12 col-sm-6 col-md-4 col-xl-3 hl-out">
+      <div class="hl-box d-flex flex-column fill-height justify-end align-start px-6 pb-8 cursor-pointer fill-height">
+        <div class="ih-info d-flex">
+          <span class="ih-date mr-2"><v-icon size="20" color="red">mdi-calendar-outline</v-icon> <time v-html="$helper.getDateFormat(post.p_time, 'dateLong')"></time></span>
+        </div>
+        <h3 class="ih-title mt-2"><router-link :to="'/'+post.slug" class="anim-text white-anim-text">{{ post.title }}</router-link></h3>
+        <p class="ih-summary">{{ post.summary || post.description  }}</p>
+      </div>
+    </v-img>
 
-    <v-col cols="12" md="4">
-      <v-carousel height="350" cycle hide-delimiter-background show-arrows-on-hover hide-delimiters delimiter-icon="mdi-minus" progress>
-        <v-carousel-item :key="'hl-item-'+index" v-for="(item, index) in getHeadline.slice(3)">
-          <HeadlineItem :key="'hl-item-sub-'+index" :item="item"/>
-        </v-carousel-item>
-      </v-carousel>
-    </v-col>
-  </v-row>
 
-</div>
+  </Flicking>
 </template>
 
 <script>
-import HeadlineItem from "@/components/child/HeadlineItem";
+import { Flicking } from "@egjs/vue-flicking";
+import { AutoPlay, Fade } from "@egjs/flicking-plugins";
+import "@egjs/vue-flicking/dist/flicking.css";
+
 export default {
   name: "HeadLines",
-  components: {HeadlineItem},
+  components: { Flicking},
+  data(){return {
+    carouselOptions: {
+      align: 'prev',
+      circular: true,
+      defaultIndex: 0,
+      horizontal: true,
+      adaptive: false,
+      panelsPerView: -1,
+      noPanelStyleOverride: false,
+      bound: true,
+      circularFallback: "bound",
+    },
+    plugins: [
+      new AutoPlay({ duration: 4000, animationDuration:2000, direction: "NEXT", stopOnHover: true })
+    ],
+
+  }},
   computed: {
     getHeadline(){
       return this.$store.getters['post/getHeadlines'];
@@ -37,4 +53,56 @@ export default {
 
 <style scoped>
 
+.hl-box::after{
+  content: "";
+  display: block;
+  position: absolute;
+  width: 100%; height: 100%;
+  top:0; right:0; bottom:0; left:0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: -1;
+}
+
+.hl-box:hover::after{
+  background-color: rgba(0,0,0,0.35);
+}
+
+
+.ih-box:hover .ih-thumb img{
+
+}
+.ih-thumb img{
+  transition-duration: 500ms;
+  max-width: 100%;
+  height: auto;
+}
+.ih-title{
+  font-weight: 900;
+  color: white;
+  font-size: 1.1vw;
+  line-height: 1.4vw;
+}
+.ih-info{
+  color: rgba(255, 255, 255, 0.95);
+
+}
+.ih-info > *{
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.3px;
+  color: rgba(255, 255, 255, 0.75);
+}
+.ih-summary{
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: 8px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+
+@media screen and (max-width: 1400px) {
+  .ih-title{font-size: 20px; line-height: 28px; }
+  .ih-summary{font-size: 14px; line-height: 22px; }
+}
 </style>

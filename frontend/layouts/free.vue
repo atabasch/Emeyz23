@@ -1,6 +1,6 @@
 <template>
 
-  <v-app style="background-color: rgba(252,252,252,1)">
+  <v-app>
     <TopBar />
     <v-main>
       <v-container fluid>

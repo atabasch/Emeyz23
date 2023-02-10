@@ -109,8 +109,8 @@ export default {
   }),
   created(){
     this.$axios.get('/admin/category').then(({status, data}) => {
-      if(status===200){
-        this.items = data.data
+      if(status===200 && data.success){
+        this.items = data.categories
       }
     }).catch(err => {  })
   },
@@ -134,10 +134,8 @@ export default {
 
     updateCategory(category, index){
       this.$axios.post('/admin/category/update/'+category.id, category).then(({status, data})=>{
-        if(status===200){
-          if(data.status){
-            this.items.splice(index, 1, data.data);
-          }
+        if(status===200 && data.success){
+            this.items.splice(index, 1, data.category);
         }
       }).catch(err => { console.log(err) })
     },
@@ -151,14 +149,12 @@ export default {
 
     onClickDelete({category, index}){
       this.$axios.post('/admin/category/delete/'+category.id).then(({status, data})=>{
-        if(status===200){
-          if(data.status){
+        if(status===200 && data.success){
             this.items.splice(index, 1);
             this.dialog.value=null;
             this.dialog.show=false;
             this.alert.text = `${category.title} kategorisi silindi.`
             this.alert.show = true;
-          }
         }
       }).catch(err => { console.log(err) })
     },

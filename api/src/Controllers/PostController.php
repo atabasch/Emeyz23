@@ -30,10 +30,12 @@ class PostController extends \Atabasch\BaseController {
         $sort       = $_GET["sort"] ?? "DESC";
 
         $sql        = "SELECT a.id, a.title, a.slug, a.keywords, a.description, a.summary, a.content, a.views, a.cover, a.video, a.p_time, a.hide_cover,
-                           (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', c.id, 'title', c.title, 'slug', c.slug)) FROM blog_categories c
+                           (SELECT JSON_ARRAYAGG(JSON_OBJECT('id', c.id, 'title', c.title, 'slug', c.slug, 'color', c.color)) FROM blog_categories c
                                INNER JOIN conn_art_cat cac on c.id = cac.blog_category_id
-                                WHERE cac.article_id=a.id AND c.status='published' AND c.hide=false) AS categories
+                                WHERE cac.article_id=a.id AND c.status='published' AND c.hide=false) AS categories,
+                            u.name AS user_name, u.fullname AS user_fullname, u.id AS user_id
                         FROM articles a
+                        INNER JOIN users u ON u.id=a.author
                         WHERE a.status='published'
                         ORDER BY a.{$orderBy} {$sort}
                         LIMIT {$offset}, {$limit}";
@@ -94,56 +96,46 @@ class PostController extends \Atabasch\BaseController {
     }
 
 
-
+    /**
+     * Kullanıcılardan gelen içeriği kayıt eder.
+     */
     #[Route("/post/create", methods: ["POST"])]
     public function create(){
-        if(!$this->hasRequestMethod("POST")){
-            $message = 'Hatalı istek';
-        }else{
+        $result = [];
+        $status = false;
+        $message = 'Hatalı istek';
+        if($this->hasRequestMethod("POST")){
             
-            $file      = $_FILES["cover"] ?? null;
-            $coverUrl   = null;
-            if($file){
-                $coverName = time().'-'.rand(1000000000,1999999999);
-                $coverPath = __DIR__.'/../../media/upload';
-
-                $uploader  = new \Atabasch\Uploader(['resize' => true, 'cover' => true, 'max_size' => (1024*1024)*3, 'path' => $coverPath]);
-                $cover     = $uploader->upload($file, $coverName, ['crop' => false, 'width' => 1170, 'height' => 720, 'pre' => 'lg_',]);
-                if($cover->status){
-                    $coverUrl   = $cover->file->nameWithoutPre;
-                    $uploader->upload($file, $coverName, ['crop' => true, 'width' => 850, 'height' => 510, 'pre' => 'md_',]);
-                    $uploader->upload($file, $coverName, ['crop' => true, 'width' => 600, 'height' => 450, 'pre' => 'sm_',]);
-                }
-            }
-        
+            $coverUrl = $this->uploadCover($_FILES["cover"] ?? null);
+            // Post edilen içerikleri alır.
             $newPost = $this->fillDataFromPost([
                 'author' => $this->authData()->uid ?? null,
                 'cover'  => $coverUrl
             ]);
 
+
             if(strlen($newPost['title']) < 5 || strlen($newPost['content']) < 120 || !strlen($newPost['content'])){
-                $message = 'Gerekli alanlarda yetersiz bilgi (başlık, içerik, yazar)';
+                $message = 'Gerekli alanlar için yetersiz giriş yapıldı. (başlık, içerik, yazar)';
             }else{
-                $insert = $this->postModel->insert($newPost);
-                if(!$insert){
+                $lastInsertId = $this->postModel->insert($newPost);
+                if(!$lastInsertId){
                     $message = 'Makale oluşturulurken beklenmedik bir sorun ile karşılaşıldı. Lütfen daha sonra yeniden deneyin.';
                 }else{
-                    $createdPost = $this->postModel->getPost($insert);
-                    return $this->response(['post' => $createdPost], true, "");
+                    $post   = $this->db->queryOne("SELECT id, title, status FROM articles WHERE id=?", [$lastInsertId]);
+                    $result['post'] =  $post;
+                    $result['lastInsertId'] =  $lastInsertId;
+                    $status = true;
+                    $message= $post->status=='published'? 'Makale yayımlandı' : 'Makaleniz gönderildi. Yönetici onayından sonra sitede görüntülenecektir.';
                 }
             }
         }
-        return $this->response([], false, $message);
+        return $this->response($result, $status, $message);
     }
 
     
 
     public function update($id, $slug){
-        echo "Bu $id numaralı yazının güncellemesi => " . $slug;;
-    }
-
-    public function delete($id){
-
+        echo "Bu $id numaralı yazının güncellemesi => " . $slug;
     }
 
 
@@ -171,8 +163,44 @@ class PostController extends \Atabasch\BaseController {
         if($auth->level > 2 && $pTime){
             $newPost['p_time']  = $pTime;
         }
-
         return array_merge($newPost, $extraData);
+    }
+
+    /**
+     * Oluşturulan makale için kapak fotoğraflarını yükler.
+     */
+    private function uploadCover($file){
+        $coverUrl   = null;
+        if($file){
+            $coverName = time().'-'.rand(1000000000,1999999999);
+            $uploader  = new \Atabasch\Uploader(['resize' => true, 'cover' => true, 'max_size' => (1024*1024)*3, 'path' => PATH_MEDIA_UPLOAD]);
+            $cover     = $uploader->upload($file, $coverName, [
+                'crop'    => Config::bool('img_lg_crop', false), 
+                'width'   => Config::get('img_lg_w', 1170), 
+                'height'  => Config::get('img_lg_h', 720), 
+                'quality' => Config::get('img_lg_quality', 100), 
+                'pre'     => 'lg_',]);
+
+            if($cover->status){
+
+                $coverUrl   = $cover->file->nameWithoutPre;
+                $uploader->upload($file, $coverName, [
+                    'crop'    => Config::bool('img_md_crop', true), 
+                    'width'   => Config::get('img_md_w', 850), 
+                    'height'  => Config::get('img_md_h', 510), 
+                    'quality' => Config::get('img_md_quality', 90), 
+                    'pre'     => 'md_',]);
+
+                $uploader->upload($file, $coverName, [
+                    'crop'    => Config::bool('img_sm_crop', true), 
+                    'width'   => Config::get('img_sm_w', 600), 
+                    'height'  => Config::get('img_sm_h', 450), 
+                    'quality' => Config::get('img_sm_quality', 90), 
+                    'pre'     => 'sm_',]);
+                
+            }
+        }
+        return $coverUrl;
     }
 
 

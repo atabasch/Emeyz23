@@ -1,29 +1,29 @@
 <template>
-  <v-card class="mb-7 elevation-1 rounded-0">
-    <v-row>
-      <v-col cols="12" sm="4" md="12" lg="4" class="py-0">
-        <router-link :to="'/'+post.slug">
-          <v-img :src="$store.state.global.img.md+post.cover" aspect-ratio="1.15" />
-        </router-link>
-      </v-col>
+  <div class="d-flex ih-box mb-5 align-stretch">
+    <div class="ih-thumb d-flex">
+      <router-link :to="'/'+post.slug">
+        <v-img :src="$store.state.global.img.sm+post.cover"
+               :alt="post.title" gradient="to top, rgba(0,0,0, .50), rgba(0,0,0,0)"
+        >
+        </v-img>
+      </router-link>
+    </div>
+    <div class="ih-body py-4 px-6">
 
-      <v-col class="px-6 px-sm-0 px-md-6 px-lg-0 py-0">
-        <v-hover v-slot="{hover}">
-          <h3 class="text-h5 my-2">
-            <router-link class="text-decoration-none  font-weight-medium black-anim-text"
-                         :to="'/'+post.slug">{{ post.title }}</router-link>
-          </h3>
-        </v-hover>
+      <div class="ih-info d-flex">
+        <span class="ih-date mr-2"><v-icon size="20" color="red">mdi-calendar-outline</v-icon> <time v-html="$helper.getDateFormat(post.p_time, 'dateLong')"></time></span>
+        <span class="ih-author mr-2"><v-icon size="20" color="red">mdi-account-outline</v-icon> <data :value="post.user_fullname">{{ post.user_fullname }}</data></span>
+      </div>
+      <v-divider class="my-2"/>
+      <h2 class="ih-title text-h5 font-weight-bold"><router-link :to="'/'+post.slug" class=" black-anim-text">{{ post.title }}</router-link></h2>
+      <p class="ih-summary">{{ post.summary || post.description }}</p>
 
-        <p class="body-2 grey--text text--darken-2">{{ post.summary || post.description }}</p>
-      </v-col>
-
-      <v-col cols="12" class="py-0">
-        <v-divider v-if="post.categories" />
+      <div class="align-self-end d-flex">
         <PostItemCategories v-if="post.categories"  :items="getCategories || null" />
-      </v-col>
-    </v-row>
-  </v-card>
+      </div>
+
+    </div>
+  </div>
 </template>
 
 <script>
@@ -47,5 +47,48 @@ export default {
 </script>
 
 <style scoped>
+.ih-box{
+  background-color: white;
+  border: 1px solid #F5F5F5;
+}
+.ih-box:hover .ih-thumb img{
+  transform: scale(1.2);
+}
+.ih-thumb{
+  flex: none;
+  position: relative;
+  overflow: hidden;
+  height: auto;
+  border-radius: 0px;
+  max-width: 320px;
+}
+.ih-thumb img{
+  transition-duration: 500ms;
+  transform: scale(1);
+  max-width: 100%;
+  height: auto;
+  border-radius: 0px;
+}
+.ih-info{
+  color: rgb(115, 115, 115);
+
+}
+.ih-info > *{
+  font-size: 14px;
+  line-height: 18px;
+  letter-spacing: 0.3px;
+}
+.ih-summary{
+  margin-top: 8px;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+}
+
+
+@media screen and (max-width: 1264px) {
+  .ih-thumb{ max-width: 260px; }
+}
+
 
 </style>

@@ -113,14 +113,13 @@ export default {
 
         this.$axios.post('/post/create', postData).then(({status, data})=>{
           if(status===200 && data.success){
-            this.$toast.success(data.message || 'Makale gönderildi.')
-            this.$router.replace('/account/posts')
+            this.$toast.success(data.message || 'Makale başarılı bir şekilde gönderildi.')
+            this.$router.replace('/account/posts');
           }else{
-            this.$toast.error(data.message || 'Makale isteği başarısız oldu.')
+            this.$toast.error(data.message || 'Makale gönderme işlemi başarısız oldu. Lütfen Daha sonra tekrar dene');
           }
-          console.log(data);
         }).catch(err => {
-
+          this.$toast.error('Beklenmedik bir sorun ile karşılaşıldı. Lütfen Daha sonra tekrar dene');
         })
       }
     }

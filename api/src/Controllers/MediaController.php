@@ -2,6 +2,7 @@
 namespace Atabasch\Controllers;
 
 use Verot\Upload\Upload;
+use Atabasch\Uploader;
 
 class MediaController extends \Atabasch\BaseController{
     private $uploadPath = __DIR__.'/../upload';
@@ -108,39 +109,37 @@ class MediaController extends \Atabasch\BaseController{
         $message = 'Hatalı İstek.';
 
         if($this->hasRequestMethod("post")){
-
+            $uploader = new Uploader();
             $selectedFile   = $_FILES['file'] ?? null;
             $message        = 'Eksik bilgi gönderildi';
-            if($selectedFile){
 
+            if($selectedFile){
                 $name           = $this->post('username');
-                $upload = $this->fileUpload($selectedFile, $name, [
+                $upload = $uploader->upload($selectedFile, $name, [
                     'crop'      => true,
                     'resize'    => true,
-                    'width'     => 800,
-                    'height'    => 600,
+                    'width'     => 600,
+                    'height'    => 450,
                     'cover'     => true,
                     'max_size'  => (1024*1024)*2,
                     'overwrite' => true,
-                    'path'      => __DIR__.'/../user'
+                    'path'      => PATH_MEDIA_USER
     
                 ]);
     
-                if(!$upload['status']){ 
-                    $message = $upload['message'];
+                if(!$upload->status){ 
+                    $message = $upload->message;
                 }else{
-                //   $upladedFilePath = $this->uploadPath.'/'.$upload['data']->file_dst_name;
-        
                     $data = [
                         'title' => $name,
-                        'src'   => $upload['data']->file_name_without_pre,
-                        'type'  => $upload['data']->file_src_mime,
+                        'src'   => $upload->file->nameWithoutPre,
+                        'type'  => $upload->file->mime,
                         'info'  => [
-                            'width'     => $upload['data']->image_dst_x,
-                            'height'    => $upload['data']->image_dst_y,
-                            'mime'      => $upload['data']->file_src_mime,
-                            'ext'       => $upload['data']->file_dst_name_ext,
-                            'size'      => $upload['data']->file_src_size
+                            'width'     => $upload->file->width,
+                            'height'    => $upload->file->height,
+                            'mime'      => $upload->file->mime,
+                            'ext'       => $upload->file->ext,
+                            'size'      => $upload->file->size
                         ]
                     ];
                     return $this->response(['file' => $data]);

@@ -5,7 +5,7 @@ use Verot\Upload\Upload;
 
 class Uploader{
 
-    public $uploadPath = __DIR__ . '/../media/upload';
+    public $uploadPath = PATH_MEDIA_UPLOAD;
     public $options = [];
 
     public function __construct($options=[]){
@@ -32,6 +32,7 @@ class Uploader{
     }
 
     private function setOptionsToUploader($handle, $options=[]){
+        $handle->image_ratio        = $options['ratio'] ?? false;
         $handle->image_ratio_crop   = $options['crop'] ?? false;
         $handle->image_resize       = $options['resize'] ?? false;
         $handle->image_x            = $options['width'] ?? 1600;

@@ -142,12 +142,10 @@ export default {
 
     getDataFromApi({offset=0, limit=10}={}){
       this.$axios.get(`/admin/post?offset=${offset}&limit=${limit}`).then(({data, status}) => {
-        if(status===200){
-          if(data.status){
-            this.items = data.data.posts;
-            this.totalPage = Math.ceil(data.data.total/this.limit);
+        if(status===200 && data.success){
+            this.items = data.posts;
+            this.totalPage = Math.ceil(data.total/this.limit);
             this.pageLoaded=true;
-          }
         }
       }).catch(err => {});
     },
@@ -157,7 +155,7 @@ export default {
       let url = '/admin/post/status/'+item.id;
       this.$axios.post(url, {status}).then(({data, status}) => {
         if(status===200){
-          item.status = data.data.status;
+          item.status = data.status;
         }
       }).catch(err => {});
     },
@@ -177,10 +175,8 @@ export default {
       }else{
 
         this.$axios.delete('/admin/post/delete/'+item.id).then(({status, data}) => {
-          if(status===200){
-            if(data.status){
+          if(status===200 && data.success){
               this.items.splice(index, 1);
-            }
           }
           this.clearDialog();
 

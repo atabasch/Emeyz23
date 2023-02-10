@@ -1,27 +1,12 @@
 <template>
   <v-row>
-    <v-col cols="12" sm="12" md="6">
-      <v-alert border="left" icon="mdi-text" elevation="1">
-        <strong>Gönderiler</strong>
-      </v-alert>
-
+    <v-col cols="12" sm="12" md="9">
+      <BoxTitle title="Son Eklenen Makaleler" />
       <PostList />
-    </v-col>
-
-    <v-col cols="12" md="3" class="hidden-sm-and-down ">
-      <div class="globalnoob91">
-        <v-alert border="left" icon="mdi-trending-up" elevation="1">
-          <strong>Trendler</strong>
-        </v-alert>
-        <TrendList />
-      </div>
     </v-col>
 
     <v-col cols="12" md="3" class="hidden-sm-and-down">
       <div class="sticky-top">
-        <v-alert border="left" icon="mdi-folder-multiple" elevation="1">
-          <strong>Kategoriler</strong>
-        </v-alert>
       <MainSidebar />
       </div>
     </v-col>
@@ -48,4 +33,6 @@ export default {
   position: sticky !important;
   bottom: 20px !important;
 }
+
+
 </style>

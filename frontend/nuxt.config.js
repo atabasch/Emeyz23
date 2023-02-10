@@ -16,10 +16,8 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      // { rel: 'manifest', href: '/manifest.json' ,},
     ],
     script: [
-      // {src: '/js/pwa.js'}
     ]
   },
 
@@ -181,7 +179,8 @@ export default {
   }, // auth
 
   toast: {
-    position: 'top-center',
+    position: 'top-right',
+    fullWidth: false,
     duration: 2500,
     keepOnHover: true,
     iconPack: 'mdi',

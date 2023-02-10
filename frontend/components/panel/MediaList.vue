@@ -12,7 +12,7 @@
             <v-sheet>
               <v-row>
                 <v-col :cols="getGrid.xs" :sm="getGrid.sm" :md="getGrid.md" :lg="getGrid.lg" :xl="getGrid.xl" v-for="(item, index) in items" :key="index">
-                  <v-card rounded="0" class="pa-1" @click="selectedImage = item">
+                  <v-card rounded="0" class="pa-1" @click="selectedImage = {...item, index}">
                     <v-img :src="$store.state.global.url.imgSm+item.src"></v-img>
                   </v-card>
                 </v-col>
@@ -44,7 +44,9 @@
                 <v-text-field :value="selectedItemUrlPre+currentImage.src"  readonly label="Görsel Bağlantısı"/>
 
                 <v-sheet class="text-right">
-                  <v-btn color="error" left dark @click="selectedImage=null">Kapat</v-btn>
+                  <v-btn color="error" dark @click="deleteImage()">Sil</v-btn>
+                  <v-spacer />
+                  <v-btn color="error" dark @click="selectedImage=null">Kapat</v-btn>
                   <v-btn color="success">Güncelle</v-btn>
                   <v-btn color="primary" v-if="popup" @click="$emit('onClickSelect', selectedImage)">Seç</v-btn>
                 </v-sheet>
@@ -135,10 +137,8 @@ export default {
 
     getItemsFromApi(offset=0){
       this.$axios.get('/admin/media?offset='+offset+'&limit=36').then(({data, status}) => {
-        if(status===200){
-          if(data.status){
-            this.items = this.items.concat(data.data);
-          }
+        if(status===200 && data.success){
+            this.items = this.items.concat(data.files);
         }
       }).catch(err => {});
     },
@@ -149,9 +149,21 @@ export default {
       console.log(endOfPage);
     },
 
-    onUploadedFile(event){
-      this.items.unshift(event);
+    onUploadedFile(file){
+      this.items.unshift(file);
       this.tab = 0;
+    },
+
+    deleteImage(){
+      this.$axios.post('/admin/media/delete', {id: this.selectedImage.id}).then(({status, data}) => {
+        if(status===200 && data.success){
+          this.items.splice(this.selectedImage.index, 1);
+          this.selectedImage = null;
+          this.$toast.success(data.message || 'Görsel silindi');
+        }
+      }).catch(err => {
+        this.$toast.error('Beklenmedik bir hata oluştu');
+      })
     }
 
   },

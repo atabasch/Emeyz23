@@ -1,19 +1,13 @@
 <template>
   <div>
-    <v-container>
+    <v-container fluid class="mt-n7">
     <HeadLines />
     </v-container>
 
-
-    <v-container v-if="getCategories.length > 0" fluid class="my-10 py-16" style="background: url('/images/catbg.svg') no-repeat center; background-size: cover; ">
-      <v-container>
-        <CarouselCategory :items="getCategories"/>
-      </v-container>
-    </v-container>
-
-
     <v-container>
-    <PostPage />
+      <CarouselCategory :items="getCategories"/>
+
+      <PostPage class="mt-3" />
     </v-container>
   </div>
 </template>

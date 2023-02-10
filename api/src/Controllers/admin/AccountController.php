@@ -20,6 +20,7 @@ class AccountController extends \Atabasch\BaseController{
 
 
     public function index($id=null){
+       
         if($id){
             return $this->getSingleUser($id);
         }else{
