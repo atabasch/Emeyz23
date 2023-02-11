@@ -7,7 +7,7 @@ class AdminController extends \Atabasch\BaseController{
 
     public function __construct(){
         parent::__construct();
-        if(!$this->checkApiKey() || !$this->checkAccess()){
+        if(!$this->checkAccess()){
             $this->json([
                 'message' => 'Geçersiz Erişim'
             ], false);
@@ -22,12 +22,7 @@ class AdminController extends \Atabasch\BaseController{
     }
 
     private function checkAccess(){
-        if($_ENV['DEV'] ?? false){
-            $headerKey = $_SERVER['HTTP_X_DEV_KEY'] ?? 'notDevKeyHeader';
-            $envKey = $_ENV['DEV_KEY'] ?? 'notDevKey';
-            return ($headerKey===$envKey);
-        }
-        return true;
+        return $this->checkApiKey();
         
     }
 

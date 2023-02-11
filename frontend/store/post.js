@@ -79,7 +79,7 @@ export const actions = {
 
   async loadPosts(vuexContext, {loadMore=false}){
     let offset =    await(!loadMore? 0 : vuexContext.getters.getPosts.length)
-    let response =  await this.$axios.get('/post?offset='+offset+'&limit=10&orderby=id&sort=DESC');
+    let response =  await this.$axios.get('/post?offset='+offset+'&limit=12&orderby=id&sort=DESC');
     if(response.status===200){
       vuexContext.commit('setPosts', {posts: response.data, loadMore: loadMore})
       if(response.data.length < 10){
@@ -90,7 +90,7 @@ export const actions = {
 
   async loadPostsFromCategory(vuexContext, {slug, loadMore=false}){
     let offset =    await(!loadMore? 0 : vuexContext.getters.getPosts.length)
-    let response = await this.$axios.get(`/category/${slug}/posts?offset=${offset}&limit=10&orderby=id&sort=DESC`);
+    let response = await this.$axios.get(`/category/${slug}/posts?offset=${offset}&limit=12&orderby=id&sort=DESC`);
     if(response.status===200){
       vuexContext.commit('setPosts', {posts: response.data.posts})
       vuexContext.commit('setCategory', response.data.category)

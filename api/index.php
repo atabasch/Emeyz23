@@ -1,6 +1,6 @@
-<?php session_start();
+<?php
 
-$url        = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'];
+
 
 
 
@@ -28,8 +28,8 @@ $controllerPre = "\\". $namespace ."\\Controllers\\";
 
 $fullPath   = $_SERVER['REQUEST_SCHEME'] . '://' . str_replace('//', '/', ($_SERVER['HTTP_HOST'] . '/' . $_SERVER['REQUEST_URI']));
 $fullPath   = str_replace($urls, '', $fullPath);
-$path       = trim(preg_replace('/^\//i', '', $fullPath));
-// $path       = trim(preg_replace('/^\//i', '', $_SERVER['REQUEST_URI']));
+//$path       = trim(preg_replace('/^\//i', '', $fullPath));
+$path       = trim(preg_replace('/^\//i', '', $_SERVER['REQUEST_URI']));
 
 $pathParts  = explode("?", $path);
 $pathParts  = explode('/', $pathParts[0]);
@@ -37,13 +37,13 @@ $pathParts  = explode('/', $pathParts[0]);
 $controllerFolderPath = __DIR__.'/src/Controllers/'.$pathParts[0];
 
 if(file_exists($controllerFolderPath) && @is_dir($controllerFolderPath)){
-    $controllerPre .= $pathParts[0] .'\\'; 
+    $controllerPre .= $pathParts[0] .'\\';
 
     array_shift($pathParts);
 }
 
 
-if(count($pathParts) < 2){ 
+if(count($pathParts) < 2){
     $pathParts[1] = "index";
 }
 
@@ -59,11 +59,10 @@ array_shift($pathParts);
 $controller = new $controllerName;
 if(method_exists($controller, $methodName)){
     $runMethod  = [$controller, $methodName];
-    call_user_func_array($runMethod, $pathParts);
 }else{
     $runMethod  = [$controller, "index"];
     array_unshift($pathParts, $methodName);
-    call_user_func_array($runMethod, $pathParts);
 }
+call_user_func_array($runMethod, $pathParts);
 
 ?>

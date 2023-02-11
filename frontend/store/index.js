@@ -22,6 +22,7 @@ export const state = function(){ return {
   access: {
     panel: process.env.DEV
   },
+  itemListingStyle: 'list'
 } }
 
 export const getters = {
@@ -67,7 +68,10 @@ export const getters = {
 
   getAccessPanel(state){
     return state.access.panel;
-  }
+  },
+
+  getItemListingStyle: state => state.itemListingStyle,
+
 }
 
 export const mutations = {
@@ -80,6 +84,12 @@ export const mutations = {
       title: 'Emeyz.com',
       description: 'emeyz.com, ne, nedir, nasıl yapılır? öğren'
     }
+  },
+  setItemListingStyle: (state, style) => {
+    if(process.client){
+      state.itemListingStyle = style;
+      localStorage.setItem('itemListingStyle', style);
+    }
   }
 
 }
@@ -88,7 +98,6 @@ export const mutations = {
 
 export const actions = {
   nuxtServerInit({commit}, {$axios}){
-    commit("setAccessPanel", process.env.DEV || 0);
     return $axios.get('/navigation/header-menu,sidebar-menu,page-menu,footer-menu,mobile-menu').then(response => {
       if(response.status===200){
         commit("navigation/setItems", response.data);

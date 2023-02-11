@@ -1,26 +1,36 @@
 <template>
   <div>
-    <template v-for="(post, index) in getPosts">
-      <PostItem v-if="index<1" :key="post.id" :post="post"  />
-      <PostItemHorizontal v-else :key="post.id" :post="post"  />
+    <template v-if="getPosts.length < 1">
+      <v-alert color="info" dark tile type="info">Bu alana henüz hiç içerik eklenmemiş. İlk makaleyi sen eklemeye ne dersin?</v-alert>
     </template>
-
-    <div class="d-flex flex-row get-more">
-      <div class="line flex-grow-1"></div>
-        <button v-if="!$store.getters['post/getLoadMoreEnd'] && getPosts.length > 9"
-          @click.stop="$store.dispatch('post/loadPosts', {loadMore: true})">Daha fazla içerik getir</button>
-      <div class="line  flex-grow-1"></div>
+    <template v-else>
+      <div class="mb-3">
+        <template v-if="$store.getters['getItemListingStyle']!='grid'">
+          <PostItemHorizontal v-for="(post, index) in getPosts" :key="post.id" :post="post"  />
+        </template>
+        <v-row v-if="$store.getters['getItemListingStyle']=='grid'" class="px-1" >
+          <PostItemGrid v-for="(post, index) in getPosts" :key="post.id" :post="post"  />
+        </v-row>
       </div>
+
+      <div class="d-flex flex-row get-more">
+        <div class="line flex-grow-1"></div>
+        <button v-if="!$store.getters['post/getLoadMoreEnd'] && getPosts.length > 9"
+                @click.stop="$store.dispatch('post/loadPosts', {loadMore: true})">Daha fazla içerik getir</button>
+        <div class="line  flex-grow-1"></div>
+      </div>
+    </template>
 
   </div>
 </template>
 
 <script>
 import PostItem from "@/components/child/PostImageItem";
+import PostItemGrid from "@/components/child/PostItemGrid";
 import PostItemHorizontal from "@/components/child/PostItemHorizontal";
 export default {
   name: "PostList",
-  components: {PostItem, PostItemHorizontal},
+  components: {PostItem, PostItemHorizontal, PostItemGrid},
   created() {
     this.$store.commit('post/setLoadMoreEnd', false);
   },

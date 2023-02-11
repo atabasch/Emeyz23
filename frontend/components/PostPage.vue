@@ -1,8 +1,14 @@
 <template>
   <v-row>
     <v-col cols="12" sm="12" md="9">
-      <BoxTitle title="Son Eklenen Makaleler" />
-      <PostList />
+      <BoxTitle title="Son Eklenen Makaleler" >
+        <template v-slot:right>
+          <ChangeItemListStyle />
+        </template>
+      </BoxTitle>
+
+      <v-progress-linear v-if="loading" indeterminate color="cyan"></v-progress-linear>
+      <PostList v-else />
     </v-col>
 
     <v-col cols="12" md="3" class="hidden-sm-and-down">
@@ -17,10 +23,12 @@
 import MainSidebar from "@/components/MainSidebar";
 import PostList from "@/components/PostList";
 import TrendList from "@/components/TrendList";
+import ChangeItemListStyle from "@/components/child/ChangeItemListStyle";
 
 export default {
   name: "PostPage",
-  components: {MainSidebar, PostList, TrendList},
+  components: {MainSidebar, PostList, TrendList, ChangeItemListStyle},
+  props: { loading: { type: Boolean, value: false } }
 }
 </script>
 

@@ -27,7 +27,16 @@ export default {
   head(){
     return this.$store.getters["getHead"]
   },
-  data () {return {}}
+  data () {return {}},
+  mounted() {
+    if(process.client){
+      if(window.innerWidth <= 600){
+        this.$store.commit('setItemListingStyle', 'grid');
+      }else{
+        this.$store.commit('setItemListingStyle', localStorage.getItem('setItemListingStyle') || 'list');
+      }
+    }
+  }
 }
 </script>
 

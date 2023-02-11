@@ -5,9 +5,8 @@
     </v-container>
 
     <v-container>
-      <CarouselCategory :items="getCategories"/>
-
-      <PostPage class="mt-3" />
+      <CarouselCategory/>
+      <PostPage :loading="postLoading" class="mt-3" />
     </v-container>
   </div>
 </template>
@@ -22,26 +21,16 @@ export default {
   components: {PostPage, HeadLines, CarouselCategory},
   data: function(){
     return {
-      categories: []
-    }
-  },
-  computed: {
-    getCategories: function(){
-      return this.categories.sort((a, b) => 0.5 - Math.random()).slice(0, 8)
+      postLoading: true,
     }
   },
   async fetch() {
     await this.$store.dispatch('post/loadTrends')
     await this.$store.dispatch('post/loadHeadlines')
     await this.$store.dispatch("post/loadPosts", {loadMore:false});
+    this.postLoading = false;
     await this.$store.commit("resetHead");
-    return this.$axios.get("/category").then(({status, data})=>{
-      if(status===200){
-        this.categories = data;
-      }
-    }).catch(err => {
-      console.log(err)
-    })
+    return true;
   },
 
 }

@@ -1,11 +1,8 @@
 <template>
-  <div class="d-flex ih-box mb-5 align-stretch">
+  <div class="d-flex ih-box mb-5 align-stretch flex-column flex-sm-row">
     <div class="ih-thumb d-flex">
       <router-link :to="$helper.getUrl.post(post.slug)">
-        <v-img :src="$store.state.global.img.sm+post.cover"
-               :alt="post.title" gradient="to top, rgba(0,0,0, .50), rgba(0,0,0,0)"
-        >
-        </v-img>
+        <v-img :src="$store.state.global.img.sm+post.cover"  :alt="post.title" gradient="to top, rgba(0,0,0, .50), rgba(0,0,0,0)"></v-img>
       </router-link>
     </div>
     <div class="ih-body py-4 px-6">
@@ -15,10 +12,11 @@
         <span class="ih-author mr-2"><v-icon size="20" color="red">mdi-account-outline</v-icon> <data :value="post.user_fullname">{{ post.user_fullname }}</data></span>
       </div>
       <v-divider class="my-2"/>
-      <h2 class="ih-title text-h5 font-weight-bold"><router-link :to="$helper.getUrl.post(post.slug)" class=" black-anim-text">{{ post.title }}</router-link></h2>
-      <p class="ih-summary">{{ post.summary || post.description }}</p>
+      <h2 class="ih-title"><router-link :to="$helper.getUrl.post(post.slug)" class=" black-anim-text">{{ post.title }}</router-link></h2>
+      <p class="ih-summary d-none d-sm-block">{{ post.summary || post.description }}</p>
 
-      <div class="align-self-end d-flex">
+      <v-divider class="my-2 d-block d-sm-none"/>
+      <div class="align-self-end d-none d-sm-flex">
         <PostItemCategories v-if="post.categories"  :items="getCategories || null" />
       </div>
 
@@ -69,6 +67,9 @@ export default {
   height: auto;
   border-radius: 0px;
 }
+.ih-title{
+  font-size: 1.6rem;
+}
 .ih-info{
   color: rgb(115, 115, 115);
 
@@ -88,6 +89,12 @@ export default {
 
 @media screen and (max-width: 1264px) {
   .ih-thumb{ max-width: 260px; }
+  .ih-title{ font-size: 1.3rem; }
+}
+
+@media screen and (max-width: 600px) {
+  .ih-thumb{ max-width: 100%; }
+  .ih-title{ font-size: 1.1rem; }
 }
 
 

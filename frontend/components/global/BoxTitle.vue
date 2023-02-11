@@ -1,11 +1,12 @@
 <template>
-  <div class="content-title">
+  <div class="content-title d-flex justify-space-between">
     <h1 v-if="tag==='h1'" :class="getClass"><v-icon v-if="icon" v-html="icon"></v-icon> {{ title }} <i></i></h1>
     <h2 v-else-if="tag==='h2'" :class="getClass"><v-icon v-if="icon" v-html="icon"></v-icon> {{ title }} <i></i></h2>
     <h3 v-else-if="tag==='h3'" :class="getClass"><v-icon v-if="icon" v-html="icon"></v-icon> {{ title }} <i></i></h3>
     <h4 v-else-if="tag==='h4'" :class="getClass"><v-icon v-if="icon" v-html="icon"></v-icon> {{ title }} <i></i></h4>
     <h5 v-else-if="tag==='h5'" :class="getClass"><v-icon v-if="icon" v-html="icon"></v-icon> {{ title }} <i></i></h5>
     <h6 v-else :class="getClass"><v-icon v-if="icon" v-html="icon"></v-icon> {{ title }} <i></i></h6>
+    <slot name="right"></slot>
     <i></i>
   </div>
 </template>
@@ -55,7 +56,7 @@ export default {
   height: 2px;
   width: 100%;
   position: absolute;
-  bottom: 0;
+  bottom: -1px;
   background-color: #E0E0E0;
 
 }

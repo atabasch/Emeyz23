@@ -1,12 +1,12 @@
 <template>
-<div v-if="items" class="category-carousel">
+<div v-if="items.length > 0" class="category-carousel">
   <BoxTitle tag="h5" title="Keşfedilecek Kategoriler" icon="mdi-compass-outline" />
 
   <Flicking :options="carouselOptions" :plugins="plugins">
 
     <div v-for="(item, index) in items" :key="index" class="px-2 col-6 col-sm-4 col-md-3 col-lg-2">
       <router-link :to="$helper.getUrl.category(item.slug)" class="text-decoration-none">
-        <v-img :src="$const.url.api.media.category+item.cover" :aspect-ratio="3/5" class="rounded-lg" gradient="rgba(0,0,0,0.0), rgba(0,0,0,0.2), rgba(0,0,0,0.4), rgba(0,0,0,0.8)">
+        <v-img :src="$const.url.api.media.category+item.cover" :aspect-ratio="3/5"  gradient="rgba(0,0,0,0.0), rgba(0,0,0,0.2), rgba(0,0,0,0.4), rgba(0,0,0,0.8)">
             <v-chip small class="rounded body-1 px-2 itemInfo" :color="item.color || '#0091fa'" dark>{{ item.total }} Makale</v-chip>
         </v-img>
         <h4 class="itemTitle black-anim-text anim-text">{{ item.title }}</h4>
@@ -26,13 +26,8 @@ import "@egjs/vue-flicking/dist/flicking.css";
 export default {
   name: "CarouselCategory",
   components: {Flicking},
-  props: {
-    items: {
-      type: Array,
-      default: []
-    }
-  },
   data(){ return {
+    items: [],
     carouselOptions: {
       align: 'prev',
       circular: true,
@@ -47,7 +42,16 @@ export default {
     plugins: [
       new AutoPlay({ duration: 3000, animationDuration:1000, direction: "NEXT", stopOnHover: true })
     ],
-  } }
+  } },
+  created() {
+    return this.$axios.get("/category").then(({status, data})=>{
+      if(status===200){
+        this.items = data;
+      }
+    }).catch(err => {
+      console.log(err)
+    })
+  }
 }
 </script>
 
