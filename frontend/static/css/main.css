@@ -5,7 +5,7 @@ html, body, .theme--light.v-application{
   color: rgba(11,11,11,1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(to right,#f80136,#f80136 50%,rgba(11,11,11,1) 50%);
+  background-image: linear-gradient(to right,#0288D1,#0288D1 50%,rgba(11,11,11,1) 50%);
   background-size: 200% 100%;
   background-position: 100%;
   transition: all 0.5s cubic-bezier(0,0,.23,1);
@@ -15,7 +15,7 @@ html, body, .theme--light.v-application{
   color: rgba(255,255,255,1);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-image: linear-gradient(to right,#f80136,#f80136 50%,rgba(255,255,255,1) 50%);
+  background-image: linear-gradient(to right,#03A9F4,#03A9F4 50%,rgba(255,255,255,1) 50%);
   background-size: 200% 100%;
   background-position: 100%;
   transition: all 0.5s cubic-bezier(0,0,.23,1);

@@ -17,7 +17,7 @@ class PageController extends \Atabasch\BaseController{
     private function getPages(){
         $sql = "SELECT id,title,slug,description,cover,views,p_time,hide_cover,allow_comments   FROM pages WHERE status='published'";
         $pages = $this->db()->queryAll($sql);
-        $this->json($pages);
+        $this->response(['pages' => $pages]);
     }
 
     private function getPage($idOrSlug){
@@ -25,7 +25,7 @@ class PageController extends \Atabasch\BaseController{
                 id,title,slug,description,content,cover,video,parent,views,p_time,hide_cover,allow_comments
                 FROM pages WHERE status='published' AND (slug=? OR id=?)";
         $page = $this->db()->queryOne($sql, [$idOrSlug, $idOrSlug]);
-        $this->json($page);
+        $this->response(['page' => $page]);
     }
 
 

@@ -6,7 +6,7 @@
              dark
              :color="category.color"
              class="item text-capitalize"
-             :to="'/kategori/'+category.slug"
+             :to="$helper.getUrl.category(category.slug)"
              :key="category.id"
              v-for="category in items ">{{ category.title }}</v-btn>
   </div>

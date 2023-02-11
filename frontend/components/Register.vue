@@ -94,7 +94,7 @@ export default {
         v => (v.length <= 1024) || 'Açıklama çok uzun'
       ],
       accept: [
-        [v => !!v || 'Kullanım şartlarını kabul etmek zorundasınız!']
+        v => v===true || 'Kullanım şartlarını kabul etmek zorundasınız!'
       ]
     },
 

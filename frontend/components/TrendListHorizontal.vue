@@ -4,13 +4,13 @@
 
   <div class="d-flex tl-box mb-5 align-start" v-for="(post, index) in getItems" :key="index">
       <div class="tl-thumb d-flex">
-        <router-link :to="'/'+post.slug"><v-img :src="$store.state.global.img.sm+post.cover" width="100px" height="85px" class="rounded" :alt="post.title"></v-img></router-link>
+        <router-link :to="$helper.getUrl.post(post.slug)"><v-img :src="$store.state.global.img.sm+post.cover" width="100px" height="85px" class="rounded" :alt="post.title"></v-img></router-link>
       </div>
       <div class="tl-body py-1 px-2">
         <div class="tl-info d-flex">
           <span class="tl-date mr-2"><v-icon size="16" color="red">mdi-clock-outline</v-icon> <time v-html="$helper.getDateFormat(post.p_time, 'dateLong')"></time></span>
         </div>
-        <h4 class="tl-title"><router-link :to="'/'+post.slug" class=" black-anim-text">{{ post.title }}</router-link></h4>
+        <h4 class="tl-title"><router-link :to="$helper.getUrl.post(post.slug)" class=" black-anim-text">{{ post.title }}</router-link></h4>
       </div>
   </div>
 

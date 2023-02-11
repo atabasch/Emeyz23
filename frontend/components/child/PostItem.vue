@@ -10,7 +10,7 @@
         <span class="ih-author mr-2"><v-icon size="20" color="red">mdi-account-outline</v-icon> <data :value="post.user_fullname">{{ post.user_fullname }}</data></span>
       </div>
       <v-divider class="my-2"/>
-      <h2 class="ih-title text-h4 font-weight-bold"><router-link :to="'/'+post.slug" class=" black-anim-text">{{ post.title }}</router-link></h2>
+      <h2 class="ih-title text-h4 font-weight-bold"><router-link :to="$helper.getUrl.post(post.slug)" class=" black-anim-text">{{ post.title }}</router-link></h2>
       <p class="ih-summary">{{ post.summary || post.description }}</p>
 
       <div class="align-self-end d-flex">

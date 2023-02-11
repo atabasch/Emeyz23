@@ -2,7 +2,7 @@
 <div>
   <BoxTitle title="Kategoriler" />
 
-  <router-link :to="'/kategori/'+item.slug" :key="item.id" v-for="item in getItems" class="d-flex flex-row catItem">
+  <router-link :to="$helper.getUrl.category(item.slug)" :key="item.id" v-for="item in getItems" class="d-flex flex-row catItem">
     <v-icon class="ico light-blue darken-2" dark v-text="item.icon"></v-icon>
     <h6 class="flex-grow-1 subtitle-2  black-anim-text">{{ item.title }}</h6>
     <span>{{ item.total }}</span>

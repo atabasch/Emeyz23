@@ -27,6 +27,10 @@ export const state = function(){ return {
 export const getters = {
   getHead(state){
     return {
+      titleTemplate(title){
+        let moreTitle = ' - Emeyz; Hayat Rehberi';
+        return (title+moreTitle).length <= 60 ? title + moreTitle : title ;
+      },
       title:  state.head.title,
       meta: [
         {hid:"description", name: "description", content: state.head.description}
@@ -35,13 +39,21 @@ export const getters = {
         {rel: 'stylesheet', href: '/css/main.css'},
       ],
       script: [
+        { src: 'https://www.googletagmanager.com/gtag/js?id=G-0ZSZZ2X8MF', async: true },
+        { type: 'text/javascript', innerHTML: `
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-0ZSZZ2X8MF');`
+        },
         {
           src: 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3641811062649980',
           // 'data-ad-client': 'ca-pub-################',
           async: true,
           crossorigin: 'anonymous'
-        }
-      ]
+        },
+      ],
+
     }
   },
 

@@ -1,7 +1,7 @@
 <template>
   <div class="d-flex ih-box mb-5 align-stretch">
     <div class="ih-thumb d-flex">
-      <router-link :to="'/'+post.slug">
+      <router-link :to="$helper.getUrl.post(post.slug)">
         <v-img :src="$store.state.global.img.sm+post.cover"
                :alt="post.title" gradient="to top, rgba(0,0,0, .50), rgba(0,0,0,0)"
         >
@@ -15,7 +15,7 @@
         <span class="ih-author mr-2"><v-icon size="20" color="red">mdi-account-outline</v-icon> <data :value="post.user_fullname">{{ post.user_fullname }}</data></span>
       </div>
       <v-divider class="my-2"/>
-      <h2 class="ih-title text-h5 font-weight-bold"><router-link :to="'/'+post.slug" class=" black-anim-text">{{ post.title }}</router-link></h2>
+      <h2 class="ih-title text-h5 font-weight-bold"><router-link :to="$helper.getUrl.post(post.slug)" class=" black-anim-text">{{ post.title }}</router-link></h2>
       <p class="ih-summary">{{ post.summary || post.description }}</p>
 
       <div class="align-self-end d-flex">

@@ -6,15 +6,16 @@
     ></v-skeleton-loader>
   </v-col>
 
-  <v-col v-else cols="12" md="8">
+  <v-col v-else cols="12" md="9">
   <v-card color="white" class="pa-4 mb-6">
     <BoxTitle :title="getPost.title" tag="h1" single></BoxTitle>
-    <div class="post-info">
+    <div class="post-info mb-2">
       <v-icon size="22">mdi-calendar-edit</v-icon> <strong>{{ getDate }}</strong> tarihinde yazıldı
       <v-icon size="22">mdi-eye</v-icon> <strong>{{ getPost.views }}</strong> kez okundu.
     </div>
 
-    <v-img :src="$store.state.global.img.lg+getPost.cover" class="my-3" />
+    <v-img v-if="(getPost.cover && getPost.hide_cover!='on')" :src="$store.state.global.img.lg+getPost.cover" class="my-3" />
+    <VideoPlayer v-if="getPost.video" :source="getPost.video" />
 
     <v-divider />
     <v-card-text v-html="getPost.content" class="text-body-1 text-md-h6 font-weight-regular black--text darken-1"></v-card-text>
@@ -33,7 +34,7 @@
   </v-col>
 
 
-  <v-col cols="4" class="hidden-sm-and-down">
+  <v-col class="hidden-sm-and-down">
     <MainSidebar />
   </v-col>
 
@@ -44,10 +45,11 @@
 import {mysqlToDate} from "@/helpers/date";
 import PostItemCategories from "@/components/child/PostItemCategories";
 import MainSidebar from "@/components/MainSidebar";
+import VideoPlayer from "@/components/VideoPlayer";
 
 export default {
   name: "PagePostSlug",
-  components: {PostItemCategories, MainSidebar},
+  components: {PostItemCategories, MainSidebar, VideoPlayer},
   data(){ return {
     post: null,
     updateMethodForViews: null

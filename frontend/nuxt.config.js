@@ -54,15 +54,9 @@ export default {
     'vue2-editor/nuxt'
   ],
 
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
-    // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    // baseURL: 'https://api.emeyz.com/',
     baseURL: process.env.API_URL || 'https://api.emeyz.com/',
     headers: {
-      // 'Access-Control-Allow-Origin': '*',
-      // 'Access-Control-Allow-Methods':  '*',
-      // 'Access-Control-Allow-Headers': ''
       'x-emeyz-key': process.env.API_KEY || 'emeyz',
       'x-dev-key': process.env.DEV_KEY || 'emeyzdev'
 

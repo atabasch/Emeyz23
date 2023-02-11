@@ -1,6 +1,6 @@
 <template>
 <v-card class="mb-5 elevation-1" tile>
-  <router-link :to="'/'+post.slug">
+  <router-link :to="$helper.getUrl.post(post.slug)">
   <v-img :src="$store.state.global.img.md+post.cover" contain />
     <span id="trendNumber">{{ index+1 }}</span>
   </router-link>
@@ -8,7 +8,7 @@
     <v-hover v-slot="{hover}">
       <h5 class="subtitle-1 font-weight-bold">
         <router-link
-          :to="'/'+post.slug"
+          :to="$helper.getUrl.post(post.slug)"
           class="text-decoration-none black-anim-text"
           >{{ post.title }}</router-link></h5>
     </v-hover>

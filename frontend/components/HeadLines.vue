@@ -9,7 +9,7 @@
         <div class="ih-info d-flex">
           <span class="ih-date mr-2"><v-icon size="20" color="red">mdi-calendar-outline</v-icon> <time v-html="$helper.getDateFormat(post.p_time, 'dateLong')"></time></span>
         </div>
-        <h3 class="ih-title mt-2"><router-link :to="'/'+post.slug" class="anim-text white-anim-text">{{ post.title }}</router-link></h3>
+        <h3 class="ih-title mt-2"><router-link :to="$helper.getUrl.post(post.slug)" class="anim-text white-anim-text">{{ post.title }}</router-link></h3>
         <p class="ih-summary">{{ post.summary || post.description  }}</p>
       </div>
     </v-img>

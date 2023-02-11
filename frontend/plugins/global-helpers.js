@@ -47,7 +47,24 @@ export default ({env}, inject) => {
     getDateFormat: function(date, format, local='tr-TR'){
       let dateObject = new Date(date);
       return dateObject.toLocaleString(local, formatTypes[format]);
-    }
+    },
+
+    getUrl: {
+      post: slug => `/${slug}`,
+      page: slug => `/sayfa/${slug}`,
+      category: slug => `/kategori/${slug}`,
+      user: slug => `/yazar/${slug}`,
+    }, // getUrl
+
+    getYoutubeId(urlOrId=''){
+        if(urlOrId.match(/v=|vi=|\.be\/|\/embed\//gi)){
+          let id = urlOrId.match(/(v=|vi=|\.be\/|\/embed\/)([a-zA-Z0-9-_=]+)/gi);
+          return !id? null : id[0].replaceAll(/v=|vi=|\.be\/|\/embed\//gi, '');
+        }else{
+          return urlOrId;
+        }
+    }, // getYoutubeId
+
 
   })
 }

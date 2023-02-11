@@ -14,7 +14,7 @@
 
         <v-menu offset-y v-if="$auth.user">
           <template v-slot:activator="{ on, attrs }">
-            <v-btn link v-bind="attrs" v-on="on" class="text-capitalize body-2 px-2"><v-icon>mdi-dots-vertical</v-icon> Hesap</v-btn>
+            <v-btn link v-bind="attrs" v-on="on" class="topNavItem"><v-icon>mdi-dots-vertical</v-icon> Hesap</v-btn>
           </template>
           <v-list nav dense >
             <v-subheader class="text-capitalize subtitle-2 px-2">İçerikler</v-subheader>

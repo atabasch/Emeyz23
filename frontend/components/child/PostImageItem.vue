@@ -11,7 +11,7 @@
             <span class="ih-date mr-2"><v-icon size="20" color="red">mdi-calendar-outline</v-icon> <time v-html="$helper.getDateFormat(post.p_time, 'dateLong')"></time></span>
             <span class="ih-author mr-2"><v-icon size="20" color="red">mdi-account-outline</v-icon> <data :value="post.user_fullname">{{ post.user_fullname }}</data></span>
           </div>
-          <h2 class="ih-title text-h4 mt-2 font-weight-bold"><router-link :to="'/'+post.slug" class="anim-text white-anim-text">{{ post.title }}</router-link></h2>
+          <h2 class="ih-title text-h4 mt-2 font-weight-bold"><router-link :to="$helper.getUrl.post(post.slug)" class="anim-text white-anim-text">{{ post.title }}</router-link></h2>
           <p class="ih-summary">{{ post.summary || post.description }}</p>
 
           <div class=" d-flex">
