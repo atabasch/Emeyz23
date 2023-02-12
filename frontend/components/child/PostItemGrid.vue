@@ -13,7 +13,7 @@
         <div><v-icon dense size="16">mdi-clock-outline</v-icon> <span v-html="$helper.getDateFormat(post.p_time, 'dateMedium')"></span></div>
         <div><v-icon dense size="16">mdi-account</v-icon> <span v-html="post.user_name"></span></div>
       </div>
-      <h3 class="title pa-0 ma-0"><a href="">{{ post.title }}</a></h3>
+      <h3 class="title pa-0 ma-0"><router-link :to="$helper.getUrl.post(post.slug)">{{ post.title }}</router-link></h3>
       <p class="summary">{{ post.summary || post.description }}</p>
     </div>
   </div>
