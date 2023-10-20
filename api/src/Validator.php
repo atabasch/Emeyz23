@@ -122,12 +122,12 @@ class Validator{
 
     // En az uzunluk kontrolü
     private function minLength(string $value, int $length=0): bool{
-        return strlen($value) >= $length;
+        return mb_strlen($value, 'UTF-8') >= $length;
     }
 
     // En fazla uzunluk kontrolü
     private function maxLength(string $value, int $length=16): bool{
-        return strlen($value) <= $length;
+        return mb_strlen($value, 'UTF-8') <= $length;
     }
 
     // minimum sayı kontrolü
@@ -157,7 +157,7 @@ class Validator{
 
     // gereklilik kontrolü
     private function required($value, $option=false): bool{
-        
+
         if(!$option){
             return true;
         }else{

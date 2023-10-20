@@ -44,7 +44,7 @@ class PostController extends \Atabasch\Controllers\AdminController{
         $limit  = $_GET['limit'] ?? 25;
         $orderby = 'p.'.($_GET['order'] ?? 'id');
         $sort = $_GET['sort'] ?? 'DESC';
-        
+
         $csql = null;
         if(!$single){
             $csql = ",(SELECT JSON_ARRAYAGG(JSON_OBJECT('id', c.id, 'title', c.title, 'slug', c.slug)) FROM blog_categories AS c INNER JOIN conn_art_cat con ON con.blog_category_id=c.id WHERE con.article_id=p.id) AS categories";
@@ -88,7 +88,7 @@ class PostController extends \Atabasch\Controllers\AdminController{
 
         $postDatas = $this->post("post");
         $postDatas['author'] = $_SESSION['account']->id ?? 1;
-        $postModel = new Post();
+                $postModel = new Post();
         $update = $postModel->update($postDatas, $id);
         $this->response(['post' => $update]);
     }
@@ -111,7 +111,7 @@ class PostController extends \Atabasch\Controllers\AdminController{
 
             $status = $this->post("status");
             if(in_array($status, ['published', 'draft', 'trash'])){
-                
+
                 $postModel = new Post();
                 $update = $postModel->updateStatus($status, $id);
                 if($update){

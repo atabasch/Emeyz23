@@ -32,7 +32,7 @@ class Post extends \Atabasch\Model {
             'maxLength' => [70, 'Başlık en fazla %number karakter olabilir']
         ],
         'description'   => [
-            'required'  => [false, 'Açıklama boş bırakılamaz'], 
+            'required'  => [false, 'Açıklama boş bırakılamaz'],
             'maxLength' => [160, 'Açıklama en fazla %number karakter olabilir']
         ],
         'author'        => [
@@ -198,11 +198,9 @@ class Post extends \Atabasch\Model {
 
             }else{
                 $removeCategoryConnect = $this->execute("DELETE FROM conn_art_cat WHERE article_id=?", [$id]);
-                if($removeCategoryConnect){
-                    $sql = "INSERT INTO conn_art_cat(article_id, blog_category_id) VALUES(?,?)";
-                    foreach($datas['category_ids'] as $cid){
-                        $this->execute($sql, [$id, $cid], true);
-                    }   
+                $sql = "INSERT INTO conn_art_cat(article_id, blog_category_id) VALUES(?,?)";
+                foreach($datas['category_ids'] as $cid){
+                    $this->execute($sql, [$id, $cid], true);
                 }
             }
             return ['status'=>true, 'post'=>$update];
@@ -214,7 +212,7 @@ class Post extends \Atabasch\Model {
         $sql    = "UPDATE articles SET `status`=?, `updated_at`=NOW() WHERE id=?";
         $update = $this->execute($sql, [$status, $id] );
         return $update;
-    }   
+    }
 
 
 
