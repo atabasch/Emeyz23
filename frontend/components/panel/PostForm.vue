@@ -244,6 +244,8 @@ export default {
               this.$router.replace(this.$store.state.global.url.panel+'posts/'+data.id+'/edit');
             }
             this.saveLoading    = false;
+        }else{
+          this.saveLoading    = false;
         }
       }).catch(err => {
         this.saveLoading    = false;

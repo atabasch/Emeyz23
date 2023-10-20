@@ -79,7 +79,7 @@ export default {
   left: 0;
 }
 .single-title{
-  font-size: 32px;
-  line-height: 52px;
+  font-size: 1.9rem;
+  line-height: 3rem;
 }
 </style>

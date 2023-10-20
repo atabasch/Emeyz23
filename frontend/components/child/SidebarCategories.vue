@@ -3,8 +3,8 @@
   <BoxTitle title="Kategoriler" />
 
   <router-link :to="$helper.getUrl.category(item.slug)" :key="item.id" v-for="item in getItems" class="d-flex flex-row catItem">
-    <v-icon class="ico light-blue darken-2" dark v-text="item.icon"></v-icon>
-    <h6 class="flex-grow-1 subtitle-2  black-anim-text">{{ item.title }}</h6>
+    <v-icon class="ico blue darken-2" dark v-text="item.icon"></v-icon>
+    <h6 class="flex-grow-1 text-body-2  black-anim-text">{{ item.title }}</h6>
     <span>{{ item.total }}</span>
   </router-link>
 </div>
@@ -41,8 +41,8 @@ export default {
   background-color: white;
 }
 .ico{
-  font-size: 20px;
-  padding: 8px;
+  font-size: 17px;
+  padding: 6px;
   border-radius: 100%;
   margin-right: 10px;
 }

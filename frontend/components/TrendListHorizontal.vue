@@ -8,7 +8,7 @@
       </div>
       <div class="tl-body py-1 px-2">
         <div class="tl-info d-flex">
-          <span class="tl-date mr-2"><v-icon size="16" color="red">mdi-clock-outline</v-icon> <time v-html="$helper.getDateFormat(post.p_time, 'dateLong')"></time></span>
+          <span class="tl-date mr-2"><time v-html="$helper.getDateFormat(post.p_time, 'dateLong')"></time></span>
         </div>
         <h4 class="tl-title"><router-link :to="$helper.getUrl.post(post.slug)" class=" black-anim-text">{{ post.title }}</router-link></h4>
       </div>
@@ -48,10 +48,9 @@ export default {
   line-height: 22px;
 }
 .tl-title{
-  font-size: 16px;
-  line-height: 26px;
+  font-size: .95rem;
+  line-height: 1.30;
   display: block;
-  height: 52px;
   overflow: hidden;
 }
 @media screen and (max-width: 1264px) {

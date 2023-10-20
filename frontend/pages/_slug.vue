@@ -7,8 +7,10 @@
   </v-col>
 
   <v-col v-else cols="12" md="9">
-  <v-card color="white" class="pa-4 mb-6">
-    <BoxTitle :title="getPost.title" tag="h1" single></BoxTitle>
+  <v-card color="white" class="pa-5 mb-6">
+    <h1 class="text-h5 text-sm-h4 font-weight-medium" :title="getPost.title">{{ getPost.title }}</h1>
+    <v-divider class="my-3" />
+
     <div class="post-info mb-2">
       <v-icon size="22">mdi-calendar-edit</v-icon> <strong>{{ getDate }}</strong> tarihinde yazıldı
       <v-icon size="22">mdi-eye</v-icon> <strong>{{ getPost.views }}</strong> kez okundu.
@@ -18,7 +20,7 @@
     <VideoPlayer v-if="getPost.video" :source="getPost.video" />
 
     <v-divider />
-    <v-card-text v-html="getPost.content" class="text-body-1 text-md-h6 font-weight-regular black--text darken-1"></v-card-text>
+    <article v-html="getPost.content" class="post-content px-0 "></article>
 
     <PostItemCategories v-if="getPost.categories"  :items="getPost.categories || null" />
   </v-card>
@@ -26,9 +28,11 @@
     <template v-if="getPost.contentItems">
       <v-card color="white" class="pa-4 mb-6" v-for="(item, index) in getPost.contentItems" :key="item.id">
         <BoxTitle :title="item.title" tag="h2" single></BoxTitle>
-        <v-img :src="$store.state.global.img.lg+item.cover" v-if="item.cover" aspect-ratio="16/9" class="my-3" />
-        <v-divider />
-        <v-card-text v-html="item.content" class="text-h6 font-weight-regular black--text darken-1"></v-card-text>
+        <template  v-if="item.cover">
+          <v-img :src="$store.state.global.img.lg+item.cover"aspect-ratio="16/9" class="my-3" />
+          <v-divider  />
+        </template>
+        <article v-html="item.content" class="post-content px-0 "></article>
       </v-card>
     </template>
   </v-col>
@@ -103,4 +107,5 @@ export default {
   font-size: 1rem;
   font-weight: 300;
 }
+
 </style>

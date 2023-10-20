@@ -2,15 +2,15 @@
 <div v-if="getHeadline">
   <Flicking :options="carouselOptions" :plugins="plugins">
 
-    <div class="pa-0 col-12 col-sm-6 col-md-4 col-lg-3 hl-out" :key="index" v-for="(post, index) in getHeadline">
+    <div class="pa-0 col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2 col- hl-out" :key="index" v-for="(post, index) in getHeadline">
       <router-link :to="$helper.getUrl.post(post.slug)" class="text-decoration-none">
       <v-img :src="$const.url.api.media.upload.lg+post.cover" :aspect-ratio="1/1">
         <div class="hl-box d-flex flex-column fill-height justify-end align-start px-6 pb-8 cursor-pointer fill-height">
           <div class="ih-info d-flex">
-            <span class="ih-date mr-2"><v-icon size="20" color="red">mdi-calendar-outline</v-icon> <time v-html="$helper.getDateFormat(post.p_time, 'dateLong')"></time></span>
+            <span class="ih-date mr-2"><time v-html="$helper.getDateFormat(post.p_time, 'dateLong')"></time></span>
           </div>
-          <h3 class="ih-title mt-2 anim-text white-anim-text">{{ post.title }}</h3>
-          <p class="ih-summary">{{ post.summary || post.description  }}</p>
+          <h3 class="ih-title mt-0 anim-text white-anim-text">{{ post.title }}</h3>
+<!--          <p class="ih-summary">{{ post.summary || post.description  }}</p>-->
         </div>
       </v-img>
       </router-link>
@@ -80,17 +80,17 @@ export default {
   height: auto;
 }
 .ih-title{
-  font-weight: 900;
+  font-weight: 600;
   color: white;
-  font-size: 1.1vw;
-  line-height: 1.4vw;
+  font-size: 1.2rem;
+  line-height: 1.2;
 }
 .ih-info{
   color: rgba(255, 255, 255, 0.95);
 
 }
 .ih-info > *{
-  font-size: 14px;
+  font-size: 13px;
   line-height: 18px;
   letter-spacing: 0.3px;
   color: rgba(255, 255, 255, 0.75);

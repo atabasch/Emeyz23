@@ -115,7 +115,7 @@ export const actions = {
   },
 
   async loadHeadlines(vuexContext){
-    let response = await this.$axios.get(`/category/manset/posts?offset=0&limit=8&orderby=id&sort=DESC`);
+    let response = await this.$axios.get(`/category/manset/posts?offset=0&limit=10&orderby=id&sort=DESC`);
     if(response.status===200){
       vuexContext.commit('setHeadlines', response.data.posts)
     }

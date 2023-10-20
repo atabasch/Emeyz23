@@ -7,7 +7,7 @@
     <div v-for="(item, index) in items" :key="index" class="px-2 col-6 col-sm-4 col-md-3 col-lg-2">
       <router-link :to="$helper.getUrl.category(item.slug)" class="text-decoration-none">
         <v-img :src="$const.url.api.media.category+item.cover" :aspect-ratio="3/5"  gradient="rgba(0,0,0,0.0), rgba(0,0,0,0.2), rgba(0,0,0,0.4), rgba(0,0,0,0.8)">
-            <v-chip small class="rounded body-1 px-2 itemInfo" :color="item.color || '#0091fa'" dark>{{ item.total }} Makale</v-chip>
+            <v-chip small class="rounded subtitle-2 px-2 itemInfo" :color="item.color || '#0091fa'" dark>{{ item.total }} Makale</v-chip>
         </v-img>
         <h4 class="itemTitle black-anim-text anim-text">{{ item.title }}</h4>
       </router-link>
@@ -70,6 +70,7 @@ export default {
 .itemTitle{
   font-size: 1.1rem;
   text-decoration: none;
+  font-weight: 500;
   margin: 10px 5px 0px;
 }
 

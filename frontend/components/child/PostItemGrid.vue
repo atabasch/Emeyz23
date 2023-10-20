@@ -1,5 +1,5 @@
 <template>
-<v-col cols="12" sm="6" xl="4" class="pa-2">
+<v-col cols="12" sm="6" xl="6" class="pa-2">
   <div class="white fill-height">
     <router-link :to="$helper.getUrl.post(post.slug)" class="fill-height">
     <v-img :src="$const.url.api.media.upload.sm+post.cover" :aspect-ratio="3/2">

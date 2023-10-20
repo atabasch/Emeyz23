@@ -27,7 +27,7 @@ html, body, .theme--light.v-application{
 }
 
 .em-container, .container:not(.container--fluid){
-  max-width: 1450px !important;
+  max-width: 1250px !important;
 }
 
 .container--fluid{
@@ -82,4 +82,38 @@ html, body, .theme--light.v-application{
 .category-carousel .hooper-next svg{
   width: 35px;
   height: 35px;
+}
+
+
+
+
+.post-content{
+  margin: 15px 0;
+  font-size: 1.10rem;
+  line-height: 1.50;
+}
+.post-content,
+.post-content p{
+  font-weight: 400;
+  color: #111;
+}
+
+.post-content p{
+  margin: 0 0 1.25rem;
+}
+
+.post-content h1,
+.post-content h2,
+.post-content h3,
+.post-content h4,
+.post-content h5,
+.post-content h6{
+  margin-top: 1rem;
+  margin-bottom: .6rem;
+}
+
+.post-content ul,
+.post-content ol{
+  margin: 0 0 1rem 2rem;
+  list-style-position: inside;
 }

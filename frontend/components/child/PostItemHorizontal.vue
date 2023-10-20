@@ -1,24 +1,29 @@
 <template>
-  <div class="d-flex ih-box mb-5 align-stretch flex-column flex-sm-row">
-    <div class="ih-thumb d-flex">
-      <router-link :to="$helper.getUrl.post(post.slug)">
-        <v-img :src="$store.state.global.img.sm+post.cover"  :alt="post.title" gradient="to top, rgba(0,0,0, .50), rgba(0,0,0,0)"></v-img>
-      </router-link>
-    </div>
-    <div class="ih-body py-4 px-6">
+  <div class="d-flex ih-box mb-5 align-start flex-column flex-sm-row">
 
-      <div class="ih-info d-flex">
-        <span class="ih-date mr-2"><v-icon size="20" color="red">mdi-calendar-outline</v-icon> <time v-html="$helper.getDateFormat(post.p_time, 'dateLong')"></time></span>
-        <span class="ih-author mr-2"><v-icon size="20" color="red">mdi-account-outline</v-icon> <data :value="post.user_fullname">{{ post.user_fullname }}</data></span>
-      </div>
-      <v-divider class="my-2"/>
+    <div class="ih-thumb d-flex">
+      <NuxtLink :to="$helper.getUrl.post(post.slug)">
+        <img :src="$store.state.global.img.sm+post.cover"
+             :alt="post.title"
+             width="260"
+             height="175"
+             gradient="to top, rgba(0,0,0, .50), rgba(0,0,0,0)" />
+      </NuxtLink>
+    </div>
+
+    <div class="ih-body pt-0 pb-4 px-6">
+      <PostItemCategories v-if="post.categories"  :items="getCategories || null" />
       <h2 class="ih-title"><router-link :to="$helper.getUrl.post(post.slug)" class=" black-anim-text">{{ post.title }}</router-link></h2>
       <p class="ih-summary d-none d-sm-block">{{ post.summary || post.description }}</p>
 
       <v-divider class="my-2 d-block d-sm-none"/>
-      <div class="align-self-end d-none d-sm-flex">
-        <PostItemCategories v-if="post.categories"  :items="getCategories || null" />
+      <div class="ih-info d-flex">
+        <span class="ih-date mr-2 d-flex align-end"><v-icon size="20" class="me-1" >mdi-calendar-outline</v-icon> <time v-html="$helper.getDateFormat(post.p_time, 'dateLong')"></time></span>
+        <span class="ih-author mr-2 d-flex align-end"><v-icon size="20" class="me-1" >mdi-account-outline</v-icon> <data :value="post.user_fullname">{{ post.user_fullname }}</data></span>
       </div>
+<!--      <div class="align-self-end d-none d-sm-flex">-->
+<!--        -->
+<!--      </div>-->
 
     </div>
   </div>
@@ -48,27 +53,28 @@ export default {
 .ih-box{
   background-color: white;
   border: 1px solid #F5F5F5;
+  padding: 10px;
+  border-radius: .5rem;
 }
-.ih-box:hover .ih-thumb img{
-  transform: scale(1.2);
-}
+
 .ih-thumb{
   flex: none;
   position: relative;
   overflow: hidden;
-  height: auto;
   border-radius: 0px;
-  max-width: 320px;
+  max-width: 350px;
 }
 .ih-thumb img{
-  transition-duration: 500ms;
-  transform: scale(1);
-  max-width: 100%;
-  height: auto;
-  border-radius: 0px;
+  width: 260px;
+  height: 175px;
+  object-fit: cover;
 }
+.ih-thumb a{line-height: 1}
 .ih-title{
-  font-size: 1.6rem;
+  font-weight: 500;
+  font-size: 1.3rem;
+  line-height: 1.6rem;
+  color: black;
 }
 .ih-info{
   color: rgb(115, 115, 115);
@@ -80,10 +86,12 @@ export default {
   letter-spacing: 0.3px;
 }
 .ih-summary{
-  margin-top: 8px;
-  font-size: 16px;
-  line-height: 24px;
+  margin-top: 5px;
+  font-size: 1rem;
+  line-height: 1.4;
   font-weight: 400;
+  margin-bottom: 10px;
+  color: #565656;
 }
 
 
